@@ -43,6 +43,283 @@
     src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- RelFlexformer custom style additions -->
+    <style>
+        .rlf-center {
+            text-align: center;
+        }
+
+        .rlf-muted {
+            color: #5f6b73;
+        }
+
+        .rlf-highlight {
+            color: #1d4f6f;
+            font-weight: 700;
+        }
+
+        .rlf-small {
+            font-size: 0.92em;
+        }
+
+        .rlf-badge-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 18px 0 8px 0;
+        }
+
+        .rlf-badge {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(29, 79, 111, 0.08);
+            border: 1px solid rgba(29, 79, 111, 0.18);
+            color: #1d4f6f;
+            font-weight: 600;
+            font-size: 0.92em;
+        }
+
+        .rlf-card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-top: 26px;
+        }
+
+        .rlf-card-grid.two {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .rlf-card-grid.four {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .rlf-card {
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.045);
+        }
+
+        .rlf-card.gray-card {
+            background: #f8fafb;
+        }
+
+        .rlf-card h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.15em;
+        }
+
+        .rlf-card p {
+            margin-bottom: 0;
+            line-height: 1.55;
+        }
+
+        .rlf-teaser {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 26px;
+            margin: 28px auto 12px auto;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+        }
+
+        .rlf-pipeline {
+            display: grid;
+            grid-template-columns: 1fr 48px 1fr 48px 1fr 48px 1fr;
+            align-items: center;
+            gap: 10px;
+            margin-top: 22px;
+        }
+
+        .rlf-pipe-box {
+            min-height: 118px;
+            border-radius: 18px;
+            background: linear-gradient(180deg, #fafdff 0%, #eef4f7 100%);
+            border: 1px solid rgba(29, 79, 111, 0.14);
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .rlf-pipe-box strong {
+            color: #17394f;
+            margin-bottom: 7px;
+        }
+
+        .rlf-arrow {
+            text-align: center;
+            font-size: 1.8em;
+            color: #1d4f6f;
+            font-weight: 700;
+        }
+
+        .rlf-equation {
+            background: #f7f9fb;
+            border-left: 5px solid #1d4f6f;
+            padding: 18px 22px;
+            border-radius: 12px;
+            margin: 22px 0;
+            font-size: 1.08em;
+        }
+
+        .rlf-method-steps {
+            display: grid;
+            grid-template-columns: 1fr 40px 1fr 40px 1fr;
+            gap: 10px;
+            align-items: stretch;
+            margin-top: 26px;
+        }
+
+        .rlf-step {
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 18px;
+            padding: 22px;
+            min-height: 150px;
+        }
+
+        .rlf-step-number {
+            display: inline-flex;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #1d4f6f;
+            color: white;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .rlf-result-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 18px 0 28px 0;
+            background: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.045);
+        }
+
+        .rlf-result-table th {
+            background: #17394f;
+            color: white;
+            padding: 13px 14px;
+            text-align: left;
+            font-weight: 700;
+        }
+
+        .rlf-result-table td {
+            padding: 13px 14px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+        }
+
+        .rlf-result-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .rlf-best {
+            font-weight: 800;
+            color: #1d4f6f;
+        }
+
+        .rlf-improvement-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-top: 18px;
+        }
+
+        .rlf-improvement {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 18px 20px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .rlf-improvement strong {
+            color: #17394f;
+        }
+
+        .rlf-score {
+            font-weight: 800;
+            color: #1d4f6f;
+            white-space: nowrap;
+        }
+
+        .rlf-mini-bars {
+            margin-top: 24px;
+        }
+
+        .rlf-bar-row {
+            display: grid;
+            grid-template-columns: 140px 1fr 74px;
+            align-items: center;
+            gap: 12px;
+            margin: 12px 0;
+        }
+
+        .rlf-bar-track {
+            height: 16px;
+            background: #e7edf1;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .rlf-bar-fill {
+            height: 100%;
+            background: #1d4f6f;
+            border-radius: 999px;
+        }
+
+        .rlf-scope {
+            background: #fff8e8;
+            border: 1px solid rgba(190, 135, 23, 0.22);
+            border-left: 5px solid #be8717;
+            border-radius: 14px;
+            padding: 20px 24px;
+            margin-top: 18px;
+        }
+
+        .rlf-code-note {
+            background: #f7f9fb;
+            border-radius: 14px;
+            padding: 18px 22px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        @media screen and (max-width: 900px) {
+            .rlf-card-grid,
+            .rlf-card-grid.two,
+            .rlf-card-grid.four,
+            .rlf-improvement-list {
+                grid-template-columns: 1fr;
+            }
+
+            .rlf-pipeline,
+            .rlf-method-steps {
+                grid-template-columns: 1fr;
+            }
+
+            .rlf-arrow {
+                transform: rotate(90deg);
+            }
+
+            .rlf-bar-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -121,6 +398,585 @@
         </p> -->
     </div>
 
+
+    <!-- ==========================================================
+         Added RelFlexformer flow sections.
+         Existing original sections below are preserved.
+         ========================================================== -->
+
+    <div class="container blog main gray" id="overview">
+        <h1>Overview</h1>
+
+        <p class="text rlf-center">
+            <b>RelFlexformer</b> enables flexible relative positional encodings for efficient 3D Transformers.
+            Instead of explicitly materializing a quadratic $L \times L$ relative-position mask, RelFlexformer
+            applies the mask as a fast Fourier operator using the Non-Uniform Fast Fourier Transform.
+        </p>
+
+        <div class="rlf-badge-row">
+            <span class="rlf-badge">Flexible RPE</span>
+            <span class="rlf-badge">$O(L \log L)$ attention</span>
+            <span class="rlf-badge">Irregular 3D tokens</span>
+            <span class="rlf-badge">Point clouds & RGB-D</span>
+        </div>
+
+        <div class="rlf-teaser">
+            <div class="rlf-pipeline">
+                <div class="rlf-pipe-box">
+                    <strong>Irregular 3D tokens</strong>
+                    <span class="rlf-small">
+                        Point clouds, RGB-D tokens, and non-uniform spatial coordinates.
+                    </span>
+                </div>
+
+                <div class="rlf-arrow">→</div>
+
+                <div class="rlf-pipe-box">
+                    <strong>Relative geometry</strong>
+                    <span class="rlf-small">
+                        Pairwise modulation through $M_{ij}=f(r_i-r_j)$.
+                    </span>
+                </div>
+
+                <div class="rlf-arrow">→</div>
+
+                <div class="rlf-pipe-box">
+                    <strong>NU-FFT operator</strong>
+                    <span class="rlf-small">
+                        Apply the RPE mask through fast mask-vector multiplication.
+                    </span>
+                </div>
+
+                <div class="rlf-arrow">→</div>
+
+                <div class="rlf-pipe-box">
+                    <strong>Efficient attention</strong>
+                    <span class="rlf-small">
+                        Geometry-aware Performer-style attention in $O(L \log L)$.
+                    </span>
+                </div>
+            </div>
+
+            <p class="caption">
+                RelFlexformer converts the expensive relative-position mask into a fast operator,
+                allowing expressive 3D positional modulation without forming the full attention matrix.
+            </p>
+        </div>
+
+        <div class="rlf-card-grid">
+            <div class="rlf-card">
+                <h3>Flexible</h3>
+                <p>
+                    Supports a broad family of integrable relative positional encoding functions,
+                    allowing different geometric priors to be injected into attention.
+                </p>
+            </div>
+
+            <div class="rlf-card">
+                <h3>Efficient</h3>
+                <p>
+                    Avoids explicit $L \times L$ mask construction and applies the RPE modulation
+                    through fast Fourier-based computation.
+                </p>
+            </div>
+
+            <div class="rlf-card">
+                <h3>Practical</h3>
+                <p>
+                    Can be plugged into existing 3D backbones such as PCT, PTv3, and DFormer
+                    for classification and segmentation tasks.
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container blog main" id="motivation">
+        <h1>Motivation</h1>
+
+        <p class="text">
+            Relative positional encodings are essential for 3D perception because the geometry between tokens
+            carries important information. However, standard dense attention is quadratic in the sequence length,
+            while efficient kernelized attention usually avoids materializing the full attention matrix.
+            This makes it difficult to directly apply expressive pairwise RPE masks.
+        </p>
+
+        <div class="rlf-card-grid">
+            <div class="rlf-card gray-card">
+                <h3>Dense Transformer</h3>
+                <p>
+                    Can naturally use pairwise relative positional encodings, but requires full
+                    $L \times L$ attention computation.
+                </p>
+                <p class="rlf-muted rlf-small">
+                    Geometry-aware, but expensive.
+                </p>
+            </div>
+
+            <div class="rlf-card gray-card">
+                <h3>Performer</h3>
+                <p>
+                    Uses kernelized attention to reduce attention cost, but does not directly expose
+                    the full attention matrix for arbitrary pairwise RPE modulation.
+                </p>
+                <p class="rlf-muted rlf-small">
+                    Efficient, but less flexible for RPE.
+                </p>
+            </div>
+
+            <div class="rlf-card">
+                <h3>RelFlexformer</h3>
+                <p>
+                    Keeps the efficient attention structure while applying a flexible RPE mask
+                    through a fast NU-FFT-based operator.
+                </p>
+                <p class="rlf-muted rlf-small">
+                    Efficient and geometry-aware.
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container blog main gray" id="method">
+        <h1>Key Idea</h1>
+
+        <p class="text">
+            RelFlexformer represents relative positional encoding as a modulation function over relative 3D coordinates.
+            For token coordinates $r_i$ and $r_j$, the RPE mask is written as
+        </p>
+
+        <div class="rlf-equation">
+            $$M_{ij}=f(r_i-r_j),$$
+            where $f$ is an integrable modulation function that determines the geometric attention bias.
+        </div>
+
+        <p class="text">
+            Directly constructing $M$ is quadratic. Instead, RelFlexformer treats multiplication by $M$
+            as a fast operator. Given a vector $u$, it computes $Mu$ using a Fourier-domain representation
+            and the Non-Uniform Fast Fourier Transform.
+        </p>
+
+        <div class="rlf-method-steps">
+            <div class="rlf-step">
+                <span class="rlf-step-number">1</span>
+                <h3>Forward NU-FFT</h3>
+                <p>
+                    Map values defined on non-uniform 3D token coordinates into the frequency domain.
+                </p>
+            </div>
+
+            <div class="rlf-arrow">→</div>
+
+            <div class="rlf-step">
+                <span class="rlf-step-number">2</span>
+                <h3>Frequency modulation</h3>
+                <p>
+                    Multiply by the Fourier transform of the chosen relative positional encoding function.
+                </p>
+            </div>
+
+            <div class="rlf-arrow">→</div>
+
+            <div class="rlf-step">
+                <span class="rlf-step-number">3</span>
+                <h3>Inverse NU-FFT</h3>
+                <p>
+                    Return to the token domain and obtain the RPE-modulated mask-vector product.
+                </p>
+            </div>
+        </div>
+
+        <div class="rlf-equation">
+            $$Mu \approx \mathrm{NUFFT}^{-1}\left(\mathcal{F}(f)\cdot \mathrm{NUFFT}(u)\right).$$
+        </div>
+
+        <p class="caption">
+            The important point is that RelFlexformer does not need to explicitly store the full RPE mask.
+            It only needs to apply the mask as an operator inside efficient attention.
+        </p>
+    </div>
+
+
+    <div class="container blog main" id="flexibility">
+        <h1>Flexible Relative Positional Encodings</h1>
+
+        <p class="text">
+            A key advantage of RelFlexformer is that the modulation function $f$ can be chosen to express
+            different geometric priors. This makes the framework more general than using a single fixed
+            positional encoding rule.
+        </p>
+
+        <div class="rlf-card-grid">
+            <div class="rlf-card">
+                <h3>Distance decay</h3>
+                <p>
+                    Encodes the intuition that nearby 3D tokens should interact more strongly than distant tokens.
+                </p>
+            </div>
+
+            <div class="rlf-card">
+                <h3>Oscillatory bias</h3>
+                <p>
+                    Allows sinusoidal or sinc-like modulation patterns that resemble Fourier positional encodings.
+                </p>
+            </div>
+
+            <div class="rlf-card">
+                <h3>Learnable geometry</h3>
+                <p>
+                    The modulation function can be adapted to the target task and data distribution.
+                </p>
+            </div>
+        </div>
+
+        <div class="rlf-equation">
+            $$\text{Different choices of } f \quad \Rightarrow \quad \text{different geometry-aware attention biases.}$$
+        </div>
+    </div>
+
+
+    <div class="container blog main gray" id="relation">
+        <h1>Relation to Existing Positional Encodings</h1>
+
+        <p class="text">
+            RelFlexformer can be viewed as a unifying framework for relative positional modulation.
+            RoPE-like harmonic modulation and STRING-style projection-based modulation can be interpreted
+            as special cases within this broader Fourier-operator perspective.
+        </p>
+
+        <div class="rlf-card-grid four">
+            <div class="rlf-card">
+                <h3>RoPE-style</h3>
+                <p>
+                    Harmonic relative modulation can be represented through frequency components.
+                </p>
+            </div>
+
+            <div class="rlf-card">
+                <h3>STRING-style</h3>
+                <p>
+                    Projection-based cosine modulation can be handled as a structured choice of $f$.
+                </p>
+            </div>
+
+            <div class="rlf-card">
+                <h3>Distance kernels</h3>
+                <p>
+                    Radial or decay-based kernels can encode locality in 3D space.
+                </p>
+            </div>
+
+            <div class="rlf-card">
+                <h3>RelFlexformer</h3>
+                <p>
+                    Generalizes these ideas to flexible integrable RPE functions on irregular tokens.
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container blog main" id="main-results">
+        <h1>Results</h1>
+
+        <p class="text">
+            RelFlexformer is evaluated across object classification, 3D semantic segmentation, and RGB-D semantic
+            segmentation. The main empirical message is that flexible RPE substantially improves Performer-style
+            efficient attention and often closes the gap to dense attention.
+        </p>
+
+        <h2>Object Classification</h2>
+
+        <table class="rlf-result-table">
+            <thead>
+                <tr>
+                    <th>Method</th>
+                    <th>ModelNet40 OA</th>
+                    <th>ScanObjectNN OA</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Transformer</td>
+                    <td>93.20</td>
+                    <td>83.23</td>
+                </tr>
+                <tr>
+                    <td>Performer</td>
+                    <td>91.33</td>
+                    <td>81.76</td>
+                </tr>
+                <tr>
+                    <td><b>RelFlexformer</b></td>
+                    <td class="rlf-best">92.94</td>
+                    <td class="rlf-best">84.45</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>3D Semantic Segmentation</h2>
+
+        <p class="text">
+            On large-scale 3D segmentation benchmarks, RelFlexformer consistently improves over the vanilla Performer
+            baseline by adding geometry-aware relative positional modulation.
+        </p>
+
+        <div class="rlf-improvement-list">
+            <div class="rlf-improvement">
+                <strong>ScanNet</strong>
+                <span class="rlf-score">74.8 → 76.8</span>
+            </div>
+
+            <div class="rlf-improvement">
+                <strong>ScanNet200</strong>
+                <span class="rlf-score">28.2 → 34.0</span>
+            </div>
+
+            <div class="rlf-improvement">
+                <strong>ScanNet++</strong>
+                <span class="rlf-score">48.1 → 48.7</span>
+            </div>
+
+            <div class="rlf-improvement">
+                <strong>nuScenes</strong>
+                <span class="rlf-score">72.0 → 80.3</span>
+            </div>
+        </div>
+
+        <h2>RGB-D Semantic Segmentation</h2>
+
+        <table class="rlf-result-table">
+            <thead>
+                <tr>
+                    <th>Method</th>
+                    <th>Complexity</th>
+                    <th>NYU Depth v2</th>
+                    <th>SUN RGB-D</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Softmax Attention</td>
+                    <td>$O(n^2)$</td>
+                    <td>55.60</td>
+                    <td>51.20</td>
+                </tr>
+                <tr>
+                    <td>Performer</td>
+                    <td>$O(n)$</td>
+                    <td>54.44</td>
+                    <td>48.49</td>
+                </tr>
+                <tr>
+                    <td>Performer + STRING</td>
+                    <td>$O(n \log n)$</td>
+                    <td>54.96</td>
+                    <td>50.87</td>
+                </tr>
+                <tr>
+                    <td><b>RelFlexformer</b></td>
+                    <td>$O(n \log n)$</td>
+                    <td class="rlf-best">55.32</td>
+                    <td class="rlf-best">51.04</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="container blog main gray" id="efficiency">
+        <h1>Efficiency</h1>
+
+        <p class="text">
+            RelFlexformer introduces a small overhead compared to vanilla Performer, but avoids the quadratic memory
+            and time cost of dense attention. The key operation is FastMult, which computes the RPE mask-vector product
+            without constructing the full pairwise mask.
+        </p>
+
+        <div class="rlf-card-grid">
+            <div class="rlf-card">
+                <h3>Dense Attention</h3>
+                <p>
+                    Requires $O(L^2)$ attention scores and becomes expensive for long 3D token sequences.
+                </p>
+            </div>
+
+            <div class="rlf-card">
+                <h3>Performer</h3>
+                <p>
+                    Efficient $O(L)$ kernelized attention, but less expressive for arbitrary RPE masks.
+                </p>
+            </div>
+
+            <div class="rlf-card">
+                <h3>RelFlexformer</h3>
+                <p>
+                    Uses $O(L \log L)$ computation to inject flexible relative positional encodings.
+                </p>
+            </div>
+        </div>
+
+        <div class="rlf-mini-bars">
+            <div class="rlf-bar-row">
+                <strong>Transformer</strong>
+                <div class="rlf-bar-track">
+                    <div class="rlf-bar-fill" style="width: 100%;"></div>
+                </div>
+                <span>$O(L^2)$</span>
+            </div>
+
+            <div class="rlf-bar-row">
+                <strong>RelFlexformer</strong>
+                <div class="rlf-bar-track">
+                    <div class="rlf-bar-fill" style="width: 58%;"></div>
+                </div>
+                <span>$O(L\log L)$</span>
+            </div>
+
+            <div class="rlf-bar-row">
+                <strong>Performer</strong>
+                <div class="rlf-bar-track">
+                    <div class="rlf-bar-fill" style="width: 38%;"></div>
+                </div>
+                <span>$O(L)$</span>
+            </div>
+        </div>
+
+        <p class="caption">
+            The visualization is conceptual: RelFlexformer trades a moderate logarithmic overhead for flexible
+            geometry-aware relative positional encoding.
+        </p>
+    </div>
+
+
+    <div class="container blog main" id="ablation">
+        <h1>Additional Analysis</h1>
+
+        <h2>Effect of Quadrature Size</h2>
+
+        <p class="text">
+            The quadrature size $S$ controls the approximation quality of the Fourier-based mask-vector multiplication.
+            Increasing $S$ generally improves the approximation, but the best value is task-dependent and often saturates.
+        </p>
+
+        <div class="rlf-card-grid">
+            <div class="rlf-card gray-card">
+                <h3>Small $S$</h3>
+                <p>
+                    Lower computational cost, but weaker approximation of the RPE operator.
+                </p>
+            </div>
+
+            <div class="rlf-card gray-card">
+                <h3>Moderate $S$</h3>
+                <p>
+                    Often enough to recover most of the benefit from flexible relative positional encoding.
+                </p>
+            </div>
+
+            <div class="rlf-card gray-card">
+                <h3>Large $S$</h3>
+                <p>
+                    More accurate approximation, but may provide diminishing returns depending on the task.
+                </p>
+            </div>
+        </div>
+
+        <h2>Plug-in Backbones</h2>
+
+        <p class="text">
+            RelFlexformer is not tied to a single architecture. It can be integrated into multiple 3D perception
+            backbones by replacing or augmenting their efficient attention blocks.
+        </p>
+
+        <div class="rlf-card-grid">
+            <div class="rlf-card">
+                <h3>PCT</h3>
+                <p>
+                    Used for object classification on ModelNet40 and ScanObjectNN.
+                </p>
+            </div>
+
+            <div class="rlf-card">
+                <h3>PTv3</h3>
+                <p>
+                    Used for point cloud semantic segmentation on large-scale 3D datasets.
+                </p>
+            </div>
+
+            <div class="rlf-card">
+                <h3>DFormer</h3>
+                <p>
+                    Used for RGB-D semantic segmentation on NYU Depth v2 and SUN RGB-D.
+                </p>
+            </div>
+        </div>
+
+        <h2>Scope</h2>
+
+        <div class="rlf-scope">
+            <p class="text">
+                RelFlexformer is designed to recover geometry-aware attention in efficient Transformer settings.
+                Dense softmax attention can still be competitive on some benchmarks, but RelFlexformer significantly
+                improves Performer-style attention while preserving subquadratic scalability.
+            </p>
+        </div>
+    </div>
+
+
+    <div class="container blog main gray" id="conclusion-relflexformer">
+        <h1>Conclusion</h1>
+
+        <p class="text">
+            RelFlexformer provides an efficient and flexible way to incorporate relative positional encodings into
+            3D Transformers. By formulating the RPE mask as a Fourier-based operator, it avoids explicit quadratic
+            mask construction while supporting irregular 3D token configurations. This makes it a practical approach
+            for scalable point cloud and RGB-D perception.
+        </p>
+
+        <div class="rlf-card-grid">
+            <div class="rlf-card">
+                <h3>Expressive RPE</h3>
+                <p>
+                    Uses integrable modulation functions to encode flexible geometric relations.
+                </p>
+            </div>
+
+            <div class="rlf-card">
+                <h3>Subquadratic Scaling</h3>
+                <p>
+                    Applies RPE masks through NU-FFT-based computation in $O(L \log L)$.
+                </p>
+            </div>
+
+            <div class="rlf-card">
+                <h3>Broad Validation</h3>
+                <p>
+                    Demonstrates gains across object classification, 3D segmentation, and RGB-D segmentation.
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container blog main" id="citation-relflexformer">
+        <h1>Citation</h1>
+
+        <p class="text">
+            If you find this project useful, please consider citing our work.
+        </p>
+
+<pre><code class="plaintext">@article{kim2026relflexformer,
+    title={RelFlexformer: Efficient Attention 3D-Transformers for Integrable Relative Positional Encodings},
+    author={Kim, Byeongchan and Sehanobish, Arijit and Dubey, Avinava and Oh, Min-hwan and Choromanski, Krzysztof},
+    journal={arXiv preprint arXiv:2605.10706},
+    year={2026}
+}</code></pre>
+    </div>
+
+
+    <!-- Existing original placeholder section preserved -->
     <div class="container blog main gray">
         <img src="clarity/images/vit.png">
         <p class="caption">
@@ -254,5 +1110,5 @@
     <script>hljs.initHighlightingOnLoad();</script>
     <script src="clarity/clarity.js"></script>    
     <script src="assets/scripts/main.js"></script>    
-    </html>
 </body>
+</html>
