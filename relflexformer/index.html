@@ -1,30 +1,29 @@
+<!DOCTYPE html>
 <html lang="en-GB">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RelFlexformer: Efficient Attention 3D-Transformers for Integrable Relative Positional Encodings</title>
-    <meta name="description" content="We've presented Clarity, a minimalist and elegant website template for AI research.">
+    <meta name="description" content="Project page for RelFlexformer: efficient 3D Transformers with flexible relative positional encodings via NU-FFT.">
     <meta name="referrer" content="no-referrer-when-downgrade">
     <meta name="robots" content="all">
     <meta content="en_EN" property="og:locale">
     <meta content="website" property="og:type">
-    <meta content="https://shikun.io/projects/clarity" property="og:url">
-    <meta content="Clarity" property="og:title">
-    <meta content="Website Template for AI Research" property="og:description">
+    <meta content="https://97byeongchan.github.io/project/relflexformer/" property="og:url">
+    <meta content="RelFlexformer" property="og:title">
+    <meta content="Efficient Attention 3D-Transformers for Integrable Relative Positional Encodings" property="og:description">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@your_twitter_id">
     <meta name="twitter:description" content="RelFlexformer: Efficient Attention 3D-Transformers for Integrable Relative Positional Encodings">
-    <meta name="twitter:image:src" content="assets/figures/clarity.png">
+    <meta name="twitter:image:src" content="assets/figures/relflexformer_teaser.png">
     
     <link rel="stylesheet" type="text/css" media="all" href="assets/stylesheets/main_free.css" />
     <link rel="stylesheet" type="text/css" media="all" href="clarity/clarity.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/foundation.min.css">
     <link href="assets/fontawesome-free-7.2.0-web/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/img-comparison-slider@8/dist/styles.css"/>
-    <script defer src="https://cdn.jsdelivr.net/npm/img-comparison-slider@8/dist/index.js"></script>
-    <script src="assets/scripts/navbar.js"></script>  <!-- Comment to remove table of content. -->
+    <script src="assets/scripts/navbar.js"></script>
     <script type="text/x-mathjax-config">
         MathJax.Hub.Config({
             "HTML-CSS": {
@@ -34,7 +33,7 @@
               undefinedFamily: "'Arial Unicode MS', cmbright"
             },
             tex2jax: {
-                inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                inlineMath: [ ['$','$'], ["\(","\)"] ],
                 processEscapes: true
               }
           });
@@ -44,160 +43,148 @@
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <!-- RelFlexformer custom style additions -->
     <style>
-        .rlf-center {
-            text-align: center;
+        :root {
+            --rlf-bg: #f6f9fb;
+            --rlf-gray: #eef3f6;
+            --rlf-text: #17212b;
+            --rlf-muted: #5f6b73;
+            --rlf-blue: #1d4f6f;
+            --rlf-blue-dark: #17394f;
+            --rlf-border: #d7e0e7;
         }
 
-        .rlf-muted {
-            color: #5f6b73;
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            color: var(--rlf-text);
+            background: #ffffff;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+            line-height: 1.62;
         }
-
-        .rlf-highlight {
-            color: #1d4f6f;
-            font-weight: 700;
+        a { color: #1d4f6f; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .container { max-width: 1180px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+        .container.blog { max-width: 1180px; }
+        .blog-title { min-height: auto; padding: 72px 0 44px 0; }
+        .blog-title.no-cover { display: block; }
+        .blog-intro { width: 100%; text-align: center; }
+        .title {
+            font-size: clamp(34px, 5vw, 62px);
+            line-height: 1.08;
+            letter-spacing: -0.04em;
+            margin: 0 auto;
+            max-width: 1050px;
+            color: #102a3a;
         }
-
-        .rlf-small {
-            font-size: 0.92em;
-        }
-
-        .rlf-badge-row {
-            display: flex;
+        .info p { margin: 0; color: #44525e; font-weight: 700; }
+        .author { margin: 0; font-size: 16px; color: #384650; }
+        .button.icon, .rlf-button {
+            display: inline-flex;
+            align-items: center;
             justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 18px 0 8px 0;
+            gap: 8px;
+            min-width: 112px;
+            padding: 10px 16px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.64);
+            border: 1px solid rgba(29, 79, 111, 0.18);
+            color: #17394f;
+            font-weight: 800;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.06);
         }
-
+        .main { padding-top: 58px; padding-bottom: 58px; }
+        .main.first { padding-top: 58px; }
+        .gray { background: var(--rlf-gray); max-width: 100%; }
+        .gray > * { max-width: 1180px; margin-left: auto; margin-right: auto; }
+        h1 {
+            font-size: clamp(30px, 3.3vw, 46px);
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            color: #102a3a;
+            margin: 0 0 20px 0;
+        }
+        h2 {
+            font-size: clamp(22px, 2.2vw, 30px);
+            line-height: 1.2;
+            color: #17394f;
+            margin: 34px 0 14px 0;
+        }
+        h3 { margin: 0 0 10px 0; color: #17394f; }
+        .text { font-size: 18px; line-height: 1.74; color: #263746; }
+        .caption {
+            color: #617282;
+            font-size: 14px;
+            line-height: 1.55;
+            text-align: center;
+            margin-top: 12px;
+        }
+        .rlf-lead { max-width: 920px; margin: 0 auto; text-align: center; font-size: 20px; color: #334451; }
+        .rlf-center { text-align: center; }
+        .rlf-muted { color: var(--rlf-muted); }
+        .rlf-hero-figure {
+            margin: 36px auto 0 auto;
+            max-width: 1180px;
+            background: #ffffff;
+            border-radius: 34px;
+            box-shadow: 0 24px 70px rgba(0,0,0,0.10);
+            border: 1px solid rgba(29,79,111,0.14);
+            overflow: hidden;
+        }
+        .rlf-hero-figure svg { display: block; width: 100%; height: auto; }
+        .rlf-badge-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin: 24px 0 0 0; }
         .rlf-badge {
             display: inline-block;
             padding: 8px 14px;
             border-radius: 999px;
             background: rgba(29, 79, 111, 0.08);
             border: 1px solid rgba(29, 79, 111, 0.18);
-            color: #1d4f6f;
-            font-weight: 600;
+            color: var(--rlf-blue);
+            font-weight: 800;
             font-size: 0.92em;
         }
-
-        .rlf-card-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
-            margin-top: 26px;
-        }
-
-        .rlf-card-grid.two {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        .rlf-card-grid.four {
-            grid-template-columns: repeat(4, 1fr);
-        }
-
+        .rlf-card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 26px; }
+        .rlf-card-grid.two { grid-template-columns: repeat(2, 1fr); }
+        .rlf-card-grid.four { grid-template-columns: repeat(4, 1fr); }
         .rlf-card {
             background: #ffffff;
             border: 1px solid rgba(0, 0, 0, 0.08);
-            border-radius: 18px;
-            padding: 22px;
+            border-radius: 20px;
+            padding: 24px;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.045);
         }
-
-        .rlf-card.gray-card {
-            background: #f8fafb;
-        }
-
-        .rlf-card h3 {
-            margin-top: 0;
+        .gray .rlf-card { background: #ffffff; }
+        .rlf-card.gray-card { background: #f8fafb; }
+        .rlf-card p { margin: 0; color: #465662; }
+        .rlf-kicker {
+            color: var(--rlf-blue);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 13px;
             margin-bottom: 10px;
-            font-size: 1.15em;
         }
-
-        .rlf-card p {
-            margin-bottom: 0;
-            line-height: 1.55;
-        }
-
-        .rlf-teaser {
+        .rlf-figure {
+            margin: 26px auto;
             background: #ffffff;
-            border-radius: 24px;
-            padding: 26px;
-            margin: 28px auto 12px auto;
             border: 1px solid rgba(0, 0, 0, 0.08);
-            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 8px 26px rgba(0,0,0,0.06);
         }
-
-        .rlf-pipeline {
-            display: grid;
-            grid-template-columns: 1fr 48px 1fr 48px 1fr 48px 1fr;
-            align-items: center;
-            gap: 10px;
-            margin-top: 22px;
-        }
-
-        .rlf-pipe-box {
-            min-height: 118px;
-            border-radius: 18px;
-            background: linear-gradient(180deg, #fafdff 0%, #eef4f7 100%);
-            border: 1px solid rgba(29, 79, 111, 0.14);
-            padding: 18px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .rlf-pipe-box strong {
-            color: #17394f;
-            margin-bottom: 7px;
-        }
-
-        .rlf-arrow {
-            text-align: center;
-            font-size: 1.8em;
-            color: #1d4f6f;
-            font-weight: 700;
-        }
-
+        .rlf-figure svg { display: block; width: 100%; height: auto; }
+        .rlf-figure-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 22px; }
         .rlf-equation {
             background: #f7f9fb;
-            border-left: 5px solid #1d4f6f;
+            border-left: 5px solid var(--rlf-blue);
             padding: 18px 22px;
             border-radius: 12px;
             margin: 22px 0;
             font-size: 1.08em;
-        }
-
-        .rlf-method-steps {
-            display: grid;
-            grid-template-columns: 1fr 40px 1fr 40px 1fr;
-            gap: 10px;
-            align-items: stretch;
-            margin-top: 26px;
-        }
-
-        .rlf-step {
-            background: #ffffff;
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            border-radius: 18px;
-            padding: 22px;
-            min-height: 150px;
-        }
-
-        .rlf-step-number {
-            display: inline-flex;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: #1d4f6f;
-            color: white;
-            align-items: center;
-            justify-content: center;
             font-weight: 700;
-            margin-bottom: 12px;
+            color: #17394f;
         }
-
         .rlf-result-table {
             width: 100%;
             border-collapse: collapse;
@@ -207,893 +194,794 @@
             overflow: hidden;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.045);
         }
-
         .rlf-result-table th {
             background: #17394f;
             color: white;
             padding: 13px 14px;
             text-align: left;
-            font-weight: 700;
-        }
-
-        .rlf-result-table td {
-            padding: 13px 14px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.07);
-        }
-
-        .rlf-result-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .rlf-best {
             font-weight: 800;
-            color: #1d4f6f;
         }
-
-        .rlf-improvement-list {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 14px;
-            margin-top: 18px;
-        }
-
-        .rlf-improvement {
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 18px 20px;
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .rlf-improvement strong {
-            color: #17394f;
-        }
-
-        .rlf-score {
-            font-weight: 800;
-            color: #1d4f6f;
-            white-space: nowrap;
-        }
-
-        .rlf-mini-bars {
-            margin-top: 24px;
-        }
-
-        .rlf-bar-row {
-            display: grid;
-            grid-template-columns: 140px 1fr 74px;
-            align-items: center;
-            gap: 12px;
-            margin: 12px 0;
-        }
-
-        .rlf-bar-track {
-            height: 16px;
-            background: #e7edf1;
-            border-radius: 999px;
-            overflow: hidden;
-        }
-
-        .rlf-bar-fill {
-            height: 100%;
-            background: #1d4f6f;
-            border-radius: 999px;
-        }
-
+        .rlf-result-table td { padding: 13px 14px; border-bottom: 1px solid rgba(0, 0, 0, 0.07); }
+        .rlf-result-table tr:last-child td { border-bottom: none; }
+        .rlf-best { font-weight: 900; color: #1d4f6f; }
         .rlf-scope {
             background: #fff8e8;
             border: 1px solid rgba(190, 135, 23, 0.22);
             border-left: 5px solid #be8717;
-            border-radius: 14px;
+            border-radius: 16px;
             padding: 20px 24px;
             margin-top: 18px;
         }
-
         .rlf-code-note {
             background: #f7f9fb;
-            border-radius: 14px;
+            border-radius: 16px;
             padding: 18px 22px;
             border: 1px solid rgba(0, 0, 0, 0.08);
+            overflow-x: auto;
         }
+        pre { white-space: pre-wrap; border-radius: 16px; }
+        footer { background: #102a3a; color: #dce7ee; padding: 28px 0; text-align: center; }
+        footer a { color: #ffffff; font-weight: 800; }
+        .rlf-note { font-size: 14px; color: #617282; }
+        .rlf-source { font-size: 13px; color: #6d7b86; margin-top: 8px; }
+        .rlf-divider { height: 1px; background: #dbe5ec; margin: 28px 0; }
 
         @media screen and (max-width: 900px) {
-            .rlf-card-grid,
-            .rlf-card-grid.two,
-            .rlf-card-grid.four,
-            .rlf-improvement-list {
-                grid-template-columns: 1fr;
-            }
+            .rlf-card-grid, .rlf-card-grid.two, .rlf-card-grid.four, .rlf-figure-grid { grid-template-columns: 1fr; }
+            .main { padding-top: 44px; padding-bottom: 44px; }
+            .text { font-size: 16px; }
+            .rlf-lead { font-size: 17px; }
+        }
 
-            .rlf-pipeline,
-            .rlf-method-steps {
-                grid-template-columns: 1fr;
-            }
-
-            .rlf-arrow {
-                transform: rotate(90deg);
-            }
-
-            .rlf-bar-row {
-                grid-template-columns: 1fr;
-            }
+        @page { size: A4; margin: 12mm; }
+        @media print {
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .main { padding-top: 26px; padding-bottom: 26px; page-break-inside: avoid; }
+            .rlf-figure, .rlf-card, table, pre { page-break-inside: avoid; }
+            .button.icon, .rlf-button { box-shadow: none; }
+            a { color: #17394f; }
         }
     </style>
 </head>
 
 <body>
     <!-- Title Page -->
-    <!-- Dark Theme Example: Change the background colour dark and change the following div "blog-title" into "blog-title white". -->
-    <div class="container blog" id="first-content" style="background-color: #E0E4E6;">
-        <!-- If you don't have a project cover: Change "blog-title" into "blog-title no-cover"  -->
-        <!-- <div class="blog-title"> -->
+    <div class="container blog" id="first-content" style="background-color: #E0E4E6; max-width: 100%;">
         <div class="blog-title no-cover">
             <div class="blog-intro">
                 <div>
                     <h1 class="title"><b>RelFlexformer: Efficient Attention 3D-Transformers for Integrable Relative Positional Encodings</b></h1>
                     <br>
                     <div class="info">
-                        <!-- <p>CVPR 2048 / Best Paper Award</p> -->
                         <p>Preprint</p>
                     </div>
                     <br>
                     <p class="author">
-                        <a href="https://97byeongchan.github.io/">Byeongchan Kim</a> <sup>1</sup> </span>
-                        <a href="https://openreview.net/profile?id=~Arijit_Sehanobish1">Arijit Sehanobish</a> <sup>2</sup> </span>
+                        <a href="https://97byeongchan.github.io/">Byeongchan Kim</a> <sup>1</sup> &nbsp;
+                        <a href="https://openreview.net/profile?id=~Arijit_Sehanobish1">Arijit Sehanobish</a> <sup>2</sup> &nbsp;
                         <a href="https://sites.google.com/site/kumaravinavadubey/home">Avinava Dubey</a> <sup>3</sup>
                         <br>
-                        <a href="https://minoh.io/">Min-hwan Oh</a> <sup>1</sup> </span>
+                        <a href="https://minoh.io/">Min-hwan Oh</a> <sup>1</sup> &nbsp;
                         <a href="https://research.google/people/krzysztofchoromanski/?&type=google">Krzysztof Choromanski</a> <sup>4,5</sup>
                     </p>
                     <p class="author" style="padding-top: 0px;">
-                        <sup>1</sup> Seoul National University </span>
-                        <sup>2</sup> Independent </span>
-                        <sup>3</sup> Google Research </span>
+                        <sup>1</sup> Seoul National University &nbsp;
+                        <sup>2</sup> Independent &nbsp;
+                        <sup>3</sup> Google Research
                         <br>
-                        <sup>4</sup> Google DeepMind </span>
+                        <sup>4</sup> Google DeepMind &nbsp;
                         <sup>5</sup> Columbia University
                     </p>
                     <br>
-                    <!-- Using FontAwesome Pro -->
-                    <!-- <div class="info">
-                        <div>
-                            <a href="https://arxiv.org" class="button icon" style="background-color: rgba(255, 255, 255, 0.3)"> Paper <i class="far fa-book-open"></i></a> &nbsp;&nbsp; 
-                            <a href="https://github.com" class="button icon" style="background-color: rgba(255, 255, 255, 0.3)">Code <i class="far fa-code"></i></a>  &nbsp;&nbsp; 
-                            <a href="https://www.microsoft.com/en-gb/microsoft-365/powerpoint" class="button icon" style="background-color: rgba(255, 255, 255, 0.3);">Slides <i class="far fa-presentation"></i></a>  &nbsp;&nbsp; 
-                            <a href="https://huggingface.co/spaces" class="button icon" style="background-color: rgba(255, 255, 255, 0.3)">Demo <i class="fa-light fa-face-smiling-hands"></i></a>
-                        </div>
-                    </div> -->
-                    <!-- Using FontAwesome Free -->
                     <div class="info">
                         <div>
-                            <a href="https://arxiv.org/pdf/2605.10706" class="button icon" style="background-color: rgba(255, 255, 255, 0.5)"> Paper <i class="fa-regular fa-file-lines"></i></a> &nbsp;&nbsp; 
-                            <a href="https://github.com/97byeongchan/RelFlexformer" class="button icon" style="background-color: rgba(255, 255, 255, 0.5)">Code <i class="fab fa-github"></i></a>
-                            <!-- <a href="https://www.microsoft.com/en-gb/microsoft-365/powerpoint" class="button icon" style="background-color: rgba(255, 255, 255, 0.2);">Slides <i class="fa-regular fa-file-powerpoint"></i></a> &nbsp;&nbsp;  -->
-                            <!-- <a href="https://huggingface.co/spaces/" class="button icon" style="background-color: rgba(255, 255, 255, 0.2)">Demo <i class="fa-brands fa-hugging-face"></i></a>  -->
+                            <a href="https://arxiv.org/pdf/2605.10706" class="button icon">Paper</a> &nbsp;&nbsp; 
+                            <a href="https://github.com/97byeongchan/RelFlexformer" class="button icon">Code</a>
                         </div>
+                    </div>
+
+                    <div class="rlf-hero-figure">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 500" role="img" aria-label="RelFlexformer teaser pipeline">
+<defs>
+<linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#f7fbfe"/><stop offset="1" stop-color="#e7f0f5"/></linearGradient>
+<linearGradient id="card" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#ffffff"/><stop offset="1" stop-color="#f4f8fb"/></linearGradient>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000000" flood-opacity="0.12"/></filter>
+</defs>
+<rect width="1280" height="500" rx="34" fill="url(#bg)"/>
+<text x="640" y="52" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="800" fill="#143348" text-anchor="middle">RelFlexformer: flexible RPE as a fast Fourier operator</text>
+<text x="640" y="84" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="500" fill="#536471" text-anchor="middle">Irregular 3D tokens -&gt; relative geometry -&gt; NU-FFT mask multiplication -&gt; efficient attention</text>
+<rect x="55" y="126" width="250" height="250" rx="22" fill="url(#card)" stroke="#c8d7e1" stroke-width="1.2" filter="url(#shadow)"/>
+<text x="180.0" y="164" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="800" fill="#17394f" text-anchor="middle">Irregular 3D tokens</text>
+<line x1="115" y1="218" x2="170" y2="196" stroke="#8db2c6" stroke-width="2" opacity="0.7"/>
+<line x1="170" y1="196" x2="227" y2="226" stroke="#8db2c6" stroke-width="2" opacity="0.7"/>
+<line x1="115" y1="218" x2="141" y2="271" stroke="#8db2c6" stroke-width="2" opacity="0.7"/>
+<line x1="141" y1="271" x2="205" y2="288" stroke="#8db2c6" stroke-width="2" opacity="0.7"/>
+<line x1="205" y1="288" x2="260" y2="264" stroke="#8db2c6" stroke-width="2" opacity="0.7"/>
+<line x1="117" y1="321" x2="189" y2="333" stroke="#8db2c6" stroke-width="2" opacity="0.7"/>
+<line x1="189" y1="333" x2="260" y2="324" stroke="#8db2c6" stroke-width="2" opacity="0.7"/>
+<line x1="141" y1="271" x2="189" y2="333" stroke="#8db2c6" stroke-width="2" opacity="0.7"/>
+<line x1="227" y1="226" x2="260" y2="264" stroke="#8db2c6" stroke-width="2" opacity="0.7"/>
+<circle cx="115" cy="218" r="7" fill="#1d4f6f"/>
+<circle cx="170" cy="196" r="7" fill="#1d4f6f"/>
+<circle cx="227" cy="226" r="7" fill="#1d4f6f"/>
+<circle cx="141" cy="271" r="7" fill="#1d4f6f"/>
+<circle cx="205" cy="288" r="7" fill="#1d4f6f"/>
+<circle cx="260" cy="264" r="7" fill="#1d4f6f"/>
+<circle cx="117" cy="321" r="7" fill="#1d4f6f"/>
+<circle cx="189" cy="333" r="7" fill="#1d4f6f"/>
+<circle cx="260" cy="324" r="7" fill="#1d4f6f"/>
+<text x="180.0" y="344" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="700" fill="#536471" text-anchor="middle">Point cloud / RGB-D</text>
+<text x="180.0" y="366" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="700" fill="#1d4f6f" text-anchor="middle">non-uniform coordinates</text>
+<rect x="365" y="126" width="250" height="250" rx="22" fill="url(#card)" stroke="#c8d7e1" stroke-width="1.2" filter="url(#shadow)"/>
+<text x="490.0" y="164" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="800" fill="#17394f" text-anchor="middle">Relative geometry</text>
+<rect x="417" y="202" width="146" height="112" rx="10" fill="#edf5f9" stroke="#b9ccd9"/>
+<rect x="425" y="210" width="18" height="12" rx="3" fill="#1d4f6f" opacity="1.00"/>
+<rect x="447" y="210" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.86"/>
+<rect x="469" y="210" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.72"/>
+<rect x="491" y="210" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.59"/>
+<rect x="513" y="210" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.45"/>
+<rect x="535" y="210" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.31"/>
+<rect x="425" y="226" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.86"/>
+<rect x="447" y="226" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.98"/>
+<rect x="469" y="226" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.85"/>
+<rect x="491" y="226" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.71"/>
+<rect x="513" y="226" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.57"/>
+<rect x="535" y="226" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.43"/>
+<rect x="425" y="242" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.72"/>
+<rect x="447" y="242" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.85"/>
+<rect x="469" y="242" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.97"/>
+<rect x="491" y="242" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.83"/>
+<rect x="513" y="242" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.69"/>
+<rect x="535" y="242" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.55"/>
+<rect x="425" y="258" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.59"/>
+<rect x="447" y="258" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.71"/>
+<rect x="469" y="258" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.83"/>
+<rect x="491" y="258" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.95"/>
+<rect x="513" y="258" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.81"/>
+<rect x="535" y="258" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.68"/>
+<rect x="425" y="274" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.45"/>
+<rect x="447" y="274" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.57"/>
+<rect x="469" y="274" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.69"/>
+<rect x="491" y="274" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.81"/>
+<rect x="513" y="274" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.94"/>
+<rect x="535" y="274" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.80"/>
+<rect x="425" y="290" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.31"/>
+<rect x="447" y="290" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.43"/>
+<rect x="469" y="290" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.55"/>
+<rect x="491" y="290" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.68"/>
+<rect x="513" y="290" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.80"/>
+<rect x="535" y="290" width="18" height="12" rx="3" fill="#1d4f6f" opacity="0.92"/>
+<text x="490.0" y="344" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="700" fill="#536471" text-anchor="middle">M_ij = f(r_i - r_j)</text>
+<text x="490.0" y="366" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="700" fill="#1d4f6f" text-anchor="middle">flexible RPE mask</text>
+<rect x="675" y="126" width="250" height="250" rx="22" fill="url(#card)" stroke="#c8d7e1" stroke-width="1.2" filter="url(#shadow)"/>
+<text x="800.0" y="164" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="800" fill="#17394f" text-anchor="middle">NU-FFT operator</text>
+<circle cx="800.0" cy="261" r="62" fill="#edf5f9" stroke="#b9ccd9"/>
+<circle cx="800.0" cy="261" r="22" fill="none" stroke="#1d4f6f" stroke-width="2" opacity="0.85"/>
+<circle cx="800.0" cy="261" r="38" fill="none" stroke="#1d4f6f" stroke-width="2" opacity="0.6699999999999999"/>
+<circle cx="800.0" cy="261" r="54" fill="none" stroke="#1d4f6f" stroke-width="2" opacity="0.49"/>
+<line x1="800.0" y1="261" x2="862.0" y2="261.0" stroke="#8db2c6" stroke-width="1.4" opacity="0.65"/>
+<line x1="800.0" y1="261" x2="843.840620433566" y2="304.84062043356596" stroke="#8db2c6" stroke-width="1.4" opacity="0.65"/>
+<line x1="800.0" y1="261" x2="800.0" y2="323.0" stroke="#8db2c6" stroke-width="1.4" opacity="0.65"/>
+<line x1="800.0" y1="261" x2="756.159379566434" y2="304.84062043356596" stroke="#8db2c6" stroke-width="1.4" opacity="0.65"/>
+<line x1="800.0" y1="261" x2="738.0" y2="261.0" stroke="#8db2c6" stroke-width="1.4" opacity="0.65"/>
+<line x1="800.0" y1="261" x2="756.159379566434" y2="217.15937956643404" stroke="#8db2c6" stroke-width="1.4" opacity="0.65"/>
+<line x1="800.0" y1="261" x2="800.0" y2="199.0" stroke="#8db2c6" stroke-width="1.4" opacity="0.65"/>
+<line x1="800.0" y1="261" x2="843.840620433566" y2="217.15937956643404" stroke="#8db2c6" stroke-width="1.4" opacity="0.65"/>
+<text x="800.0" y="344" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="700" fill="#536471" text-anchor="middle">Forward -&gt; modulate -&gt; inverse</text>
+<text x="800.0" y="366" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="700" fill="#1d4f6f" text-anchor="middle">fast mask-vector product</text>
+<rect x="985" y="126" width="250" height="250" rx="22" fill="url(#card)" stroke="#c8d7e1" stroke-width="1.2" filter="url(#shadow)"/>
+<text x="1110.0" y="164" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="800" fill="#17394f" text-anchor="middle">Efficient attention</text>
+<rect x="1043" y="212" width="112" height="44" rx="12" fill="#edf5f9" stroke="#b9ccd9"/>
+<rect x="1086" y="230" width="112" height="44" rx="12" fill="#edf5f9" stroke="#b9ccd9"/>
+<rect x="1129" y="248" width="112" height="44" rx="12" fill="#edf5f9" stroke="#b9ccd9"/>
+<text x="1110.0" y="294" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="700" fill="#536471" text-anchor="middle">Performer-style attention</text>
+<text x="1110.0" y="344" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="700" fill="#536471" text-anchor="middle">No full L x L mask</text>
+<text x="1110.0" y="366" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="900" fill="#1d4f6f" text-anchor="middle">O(L log L) RPE</text>
+<line x1="325" y1="250" x2="383" y2="250" stroke="#1d4f6f" stroke-width="3" stroke-linecap="round"/><polygon points="383,250 374.33974596215563,255.0 374.33974596215563,245.0" fill="#1d4f6f"/>
+<line x1="635" y1="250" x2="693" y2="250" stroke="#1d4f6f" stroke-width="3" stroke-linecap="round"/><polygon points="693,250 684.3397459621556,255.0 684.3397459621556,245.0" fill="#1d4f6f"/>
+<line x1="945" y1="250" x2="1003" y2="250" stroke="#1d4f6f" stroke-width="3" stroke-linecap="round"/><polygon points="1003,250 994.3397459621556,255.0 994.3397459621556,245.0" fill="#1d4f6f"/>
+<text x="640" y="462" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#536471" text-anchor="middle">The RPE mask is never built explicitly; it is applied as an operator inside efficient attention.</text>
+</svg>
                     </div>
                 </div>
             </div>
-            <!-- <div class="blog-cover">
-                <img class="foreground" src="assets/figures/clarity.png">
-                <img class="background" src="assets/figures/clarity.png">
-            </div> -->
         </div>
     </div>
 
-
     <div class="container blog main first" id="blog-main">
-        <h1 >
-            Introduction
-        </h1>
+        <div class="rlf-kicker">Overview</div>
+        <h1>Introduction</h1>
         <p class='text'>
             <b>RelFlexformers</b> provide a new class of efficient 3D Transformers that combine expressive <b>relative positional encodings with subquadratic attention</b>.
             By framing <b>geometric modulation via the Non-Uniform Fourier Transform</b>, we have shown that it is possible to incorporate a broad family of integrable RPE functions without sacrificing the computational benefits of kernelized attention.
-            Our approach achieves a complexity of <b>$O(L \log L)$</b>, establishing it as a highly scalable architecture for processing large-scale, irregular point clouds that were previously bottlenecked by the quadratic cost of standard dense attention.
+            Our approach achieves a complexity of <b>O(L log L)</b>, establishing it as a highly scalable architecture for processing large-scale, irregular point clouds that were previously bottlenecked by the quadratic cost of standard dense attention.
             Our empirical results across various 3D benchmarks demonstrate that the flexibility provided by our framework, specifically the ability to handle non-structured, heterogeneous token distributions, leads to consistent performance gains over the baseline Performer and even surpassing the dense Transformers.
-        </p>
-        <!-- <p class="text">
-            Sagittis donec nibh etiam leo eget iaculis proin. Dapibus morbi vitae ad vestibulum montes odio varius. Ullamcorper finibus nibh suscipit libero velit suspendisse. Potenti potenti risus integer libero semper potenti vivamus. Libero cras lectus netus faucibus nisl. Congue aliquet congue ante netus eu, vestibulum arcu. Scelerisque tempor taciti senectus mus penatibus condimentum consequat in. Tempor conubia molestie tristique; orci taciti augue. Justo ultrices consequat hac vivamus proin sodales.
-        </p> -->
-    </div>
-
-
-    <!-- ==========================================================
-         Added RelFlexformer flow sections.
-         Existing original sections below are preserved.
-         ========================================================== -->
-
-    <div class="container blog main gray" id="overview">
-        <h1>Overview</h1>
-
-        <p class="text rlf-center">
-            <b>RelFlexformer</b> enables flexible relative positional encodings for efficient 3D Transformers.
-            Instead of explicitly materializing a quadratic $L \times L$ relative-position mask, RelFlexformer
-            applies the mask as a fast Fourier operator using the Non-Uniform Fast Fourier Transform.
         </p>
 
         <div class="rlf-badge-row">
             <span class="rlf-badge">Flexible RPE</span>
-            <span class="rlf-badge">$O(L \log L)$ attention</span>
+            <span class="rlf-badge">O(L log L) attention</span>
             <span class="rlf-badge">Irregular 3D tokens</span>
             <span class="rlf-badge">Point clouds & RGB-D</span>
-        </div>
-
-        <div class="rlf-teaser">
-            <div class="rlf-pipeline">
-                <div class="rlf-pipe-box">
-                    <strong>Irregular 3D tokens</strong>
-                    <span class="rlf-small">
-                        Point clouds, RGB-D tokens, and non-uniform spatial coordinates.
-                    </span>
-                </div>
-
-                <div class="rlf-arrow">→</div>
-
-                <div class="rlf-pipe-box">
-                    <strong>Relative geometry</strong>
-                    <span class="rlf-small">
-                        Pairwise modulation through $M_{ij}=f(r_i-r_j)$.
-                    </span>
-                </div>
-
-                <div class="rlf-arrow">→</div>
-
-                <div class="rlf-pipe-box">
-                    <strong>NU-FFT operator</strong>
-                    <span class="rlf-small">
-                        Apply the RPE mask through fast mask-vector multiplication.
-                    </span>
-                </div>
-
-                <div class="rlf-arrow">→</div>
-
-                <div class="rlf-pipe-box">
-                    <strong>Efficient attention</strong>
-                    <span class="rlf-small">
-                        Geometry-aware Performer-style attention in $O(L \log L)$.
-                    </span>
-                </div>
-            </div>
-
-            <p class="caption">
-                RelFlexformer converts the expensive relative-position mask into a fast operator,
-                allowing expressive 3D positional modulation without forming the full attention matrix.
-            </p>
         </div>
 
         <div class="rlf-card-grid">
             <div class="rlf-card">
                 <h3>Flexible</h3>
-                <p>
-                    Supports a broad family of integrable relative positional encoding functions,
-                    allowing different geometric priors to be injected into attention.
-                </p>
+                <p>Supports integrable modulation functions f, allowing different distance-aware geometric priors to be injected into attention.</p>
             </div>
-
             <div class="rlf-card">
                 <h3>Efficient</h3>
-                <p>
-                    Avoids explicit $L \times L$ mask construction and applies the RPE modulation
-                    through fast Fourier-based computation.
-                </p>
+                <p>Applies the relative-position mask as a fast operator, avoiding explicit L x L mask materialization.</p>
             </div>
-
             <div class="rlf-card">
                 <h3>Practical</h3>
-                <p>
-                    Can be plugged into existing 3D backbones such as PCT, PTv3, and DFormer
-                    for classification and segmentation tasks.
-                </p>
+                <p>Designed for irregular 3D token layouts and evaluated with PCT, PTv3, and DFormer backbones.</p>
             </div>
         </div>
     </div>
 
-
-    <div class="container blog main" id="motivation">
-        <h1>Motivation</h1>
-
+    <div class="container blog main gray" id="motivation">
+        <div class="rlf-kicker">Problem</div>
+        <h1>Why efficient attention needs geometry</h1>
         <p class="text">
-            Relative positional encodings are essential for 3D perception because the geometry between tokens
-            carries important information. However, standard dense attention is quadratic in the sequence length,
-            while efficient kernelized attention usually avoids materializing the full attention matrix.
-            This makes it difficult to directly apply expressive pairwise RPE masks.
+            Standard dense attention can naturally incorporate pairwise relative positional encodings, but its quadratic cost becomes a bottleneck for long 3D token sequences. Performer-style efficient attention reduces the attention cost, but it does not explicitly materialize the full attention matrix, making arbitrary pairwise RPE masks hard to insert directly.
         </p>
-
         <div class="rlf-card-grid">
             <div class="rlf-card gray-card">
                 <h3>Dense Transformer</h3>
-                <p>
-                    Can naturally use pairwise relative positional encodings, but requires full
-                    $L \times L$ attention computation.
-                </p>
-                <p class="rlf-muted rlf-small">
-                    Geometry-aware, but expensive.
-                </p>
+                <p>Geometry-aware through pairwise RPE, but requires full O(L^2) attention computation.</p>
             </div>
-
             <div class="rlf-card gray-card">
                 <h3>Performer</h3>
-                <p>
-                    Uses kernelized attention to reduce attention cost, but does not directly expose
-                    the full attention matrix for arbitrary pairwise RPE modulation.
-                </p>
-                <p class="rlf-muted rlf-small">
-                    Efficient, but less flexible for RPE.
-                </p>
+                <p>Efficient O(L) kernelized attention, but arbitrary RPE masks are not directly available as element-wise corrections.</p>
             </div>
-
             <div class="rlf-card">
                 <h3>RelFlexformer</h3>
-                <p>
-                    Keeps the efficient attention structure while applying a flexible RPE mask
-                    through a fast NU-FFT-based operator.
-                </p>
-                <p class="rlf-muted rlf-small">
-                    Efficient and geometry-aware.
-                </p>
+                <p>Uses fast mask-vector multiplication to combine efficient attention with flexible geometric modulation.</p>
             </div>
+        </div>
+        <div class="rlf-figure">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 390" role="img" aria-label="Substitute for Fig. 1-left: Scaling with sequence length">
+<rect width="100%" height="100%" rx="22" fill="#ffffff"/>
+<text x="560.0" y="34" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800" fill="#17394f" text-anchor="middle">Substitute for Fig. 1-left: Scaling with sequence length</text>
+<line x1="80" y1="58.0" x2="1080" y2="58.0" stroke="#e4ebf0"/>
+<line x1="80" y1="123.5" x2="1080" y2="123.5" stroke="#e4ebf0"/>
+<line x1="80" y1="189.0" x2="1080" y2="189.0" stroke="#e4ebf0"/>
+<line x1="80" y1="254.5" x2="1080" y2="254.5" stroke="#e4ebf0"/>
+<line x1="80" y1="320.0" x2="1080" y2="320.0" stroke="#e4ebf0"/>
+<line x1="80.0" y1="58" x2="80.0" y2="320" stroke="#eef3f6"/>
+<text x="80.0" y="350" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="500" fill="#617282" text-anchor="middle">256</text>
+<line x1="205.0" y1="58" x2="205.0" y2="320" stroke="#eef3f6"/>
+<text x="205.0" y="350" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="500" fill="#617282" text-anchor="middle">512</text>
+<line x1="330.0" y1="58" x2="330.0" y2="320" stroke="#eef3f6"/>
+<text x="330.0" y="350" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="500" fill="#617282" text-anchor="middle">1k</text>
+<line x1="455.0" y1="58" x2="455.0" y2="320" stroke="#eef3f6"/>
+<text x="455.0" y="350" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="500" fill="#617282" text-anchor="middle">2k</text>
+<line x1="580.0" y1="58" x2="580.0" y2="320" stroke="#eef3f6"/>
+<text x="580.0" y="350" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="500" fill="#617282" text-anchor="middle">4k</text>
+<line x1="705.0" y1="58" x2="705.0" y2="320" stroke="#eef3f6"/>
+<text x="705.0" y="350" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="500" fill="#617282" text-anchor="middle">8k</text>
+<line x1="830.0" y1="58" x2="830.0" y2="320" stroke="#eef3f6"/>
+<text x="830.0" y="350" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="500" fill="#617282" text-anchor="middle">16k</text>
+<line x1="955.0" y1="58" x2="955.0" y2="320" stroke="#eef3f6"/>
+<text x="955.0" y="350" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="500" fill="#617282" text-anchor="middle">32k</text>
+<line x1="1080.0" y1="58" x2="1080.0" y2="320" stroke="#eef3f6"/>
+<text x="1080.0" y="350" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="500" fill="#617282" text-anchor="middle">64k</text>
+<line x1="80" y1="58" x2="80" y2="320" stroke="#9cafbd"/>
+<line x1="80" y1="320" x2="1080" y2="320" stroke="#9cafbd"/>
+<text x="70" y="63.0" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="500" fill="#617282" text-anchor="end">9.2</text>
+<text x="70" y="128.5" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="500" fill="#617282" text-anchor="end">2.4</text>
+<text x="70" y="194.0" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="500" fill="#617282" text-anchor="end">0.61</text>
+<text x="70" y="259.5" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="500" fill="#617282" text-anchor="end">0.16</text>
+<text x="70" y="325.0" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="500" fill="#617282" text-anchor="end">0.04</text>
+<text x="25" y="189.0" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="700" fill="#617282" text-anchor="middle">time (relative)</text>
+<polyline points="80.0,309.2 205.0,293.0 330.0,267.1 455.0,215.5 580.0,156.1 705.0,92.5" fill="none" stroke="#1f9d86" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="80.0" cy="309.2" r="4.5" fill="#1f9d86" stroke="#fff" stroke-width="1.5"/>
+<circle cx="205.0" cy="293.0" r="4.5" fill="#1f9d86" stroke="#fff" stroke-width="1.5"/>
+<circle cx="330.0" cy="267.1" r="4.5" fill="#1f9d86" stroke="#fff" stroke-width="1.5"/>
+<circle cx="455.0" cy="215.5" r="4.5" fill="#1f9d86" stroke="#fff" stroke-width="1.5"/>
+<circle cx="580.0" cy="156.1" r="4.5" fill="#1f9d86" stroke="#fff" stroke-width="1.5"/>
+<circle cx="705.0" cy="92.5" r="4.5" fill="#1f9d86" stroke="#fff" stroke-width="1.5"/>
+<line x1="92" y1="70" x2="118" y2="70" stroke="#1f9d86" stroke-width="3"/>
+<text x="126" y="75" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#2f3d49" text-anchor="start">Transformer</text>
+<polyline points="80.0,320.0 205.0,309.2 330.0,293.0 455.0,275.9 580.0,256.3 705.0,233.7 830.0,209.1 955.0,182.1 1080.0,158.2" fill="none" stroke="#3b82f6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="80.0" cy="320.0" r="4.5" fill="#3b82f6" stroke="#fff" stroke-width="1.5"/>
+<circle cx="205.0" cy="309.2" r="4.5" fill="#3b82f6" stroke="#fff" stroke-width="1.5"/>
+<circle cx="330.0" cy="293.0" r="4.5" fill="#3b82f6" stroke="#fff" stroke-width="1.5"/>
+<circle cx="455.0" cy="275.9" r="4.5" fill="#3b82f6" stroke="#fff" stroke-width="1.5"/>
+<circle cx="580.0" cy="256.3" r="4.5" fill="#3b82f6" stroke="#fff" stroke-width="1.5"/>
+<circle cx="705.0" cy="233.7" r="4.5" fill="#3b82f6" stroke="#fff" stroke-width="1.5"/>
+<circle cx="830.0" cy="209.1" r="4.5" fill="#3b82f6" stroke="#fff" stroke-width="1.5"/>
+<circle cx="955.0" cy="182.1" r="4.5" fill="#3b82f6" stroke="#fff" stroke-width="1.5"/>
+<circle cx="1080.0" cy="158.2" r="4.5" fill="#3b82f6" stroke="#fff" stroke-width="1.5"/>
+<line x1="92" y1="94" x2="118" y2="94" stroke="#3b82f6" stroke-width="3"/>
+<text x="126" y="99" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#2f3d49" text-anchor="start">Performer</text>
+<polyline points="80.0,247.5 205.0,244.9 330.0,237.9 455.0,222.9 580.0,193.7 705.0,162.6 830.0,129.2 955.0,91.4 1080.0,58.0" fill="none" stroke="#8b5cf6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="80.0" cy="247.5" r="4.5" fill="#8b5cf6" stroke="#fff" stroke-width="1.5"/>
+<circle cx="205.0" cy="244.9" r="4.5" fill="#8b5cf6" stroke="#fff" stroke-width="1.5"/>
+<circle cx="330.0" cy="237.9" r="4.5" fill="#8b5cf6" stroke="#fff" stroke-width="1.5"/>
+<circle cx="455.0" cy="222.9" r="4.5" fill="#8b5cf6" stroke="#fff" stroke-width="1.5"/>
+<circle cx="580.0" cy="193.7" r="4.5" fill="#8b5cf6" stroke="#fff" stroke-width="1.5"/>
+<circle cx="705.0" cy="162.6" r="4.5" fill="#8b5cf6" stroke="#fff" stroke-width="1.5"/>
+<circle cx="830.0" cy="129.2" r="4.5" fill="#8b5cf6" stroke="#fff" stroke-width="1.5"/>
+<circle cx="955.0" cy="91.4" r="4.5" fill="#8b5cf6" stroke="#fff" stroke-width="1.5"/>
+<circle cx="1080.0" cy="58.0" r="4.5" fill="#8b5cf6" stroke="#fff" stroke-width="1.5"/>
+<line x1="92" y1="118" x2="118" y2="118" stroke="#8b5cf6" stroke-width="3"/>
+<text x="126" y="123" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#2f3d49" text-anchor="start">RelFlexformer</text>
+<text x="560.0" y="374" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="500" fill="#6d7b86" text-anchor="middle">Conceptual redrawing: replace with the official paper figure when assets are available.</text>
+</svg>
         </div>
     </div>
 
-
-    <div class="container blog main gray" id="method">
-        <h1>Key Idea</h1>
-
+    <div class="container blog main" id="method">
+        <div class="rlf-kicker">Method</div>
+        <h1>Key idea: RPE mask as a fast Fourier operator</h1>
         <p class="text">
-            RelFlexformer represents relative positional encoding as a modulation function over relative 3D coordinates.
-            For token coordinates $r_i$ and $r_j$, the RPE mask is written as
+            RelFlexformer writes the relative-position mask as a function of relative token coordinates. For token positions r_i and r_j, the mask is
         </p>
-
         <div class="rlf-equation">
-            $$M_{ij}=f(r_i-r_j),$$
-            where $f$ is an integrable modulation function that determines the geometric attention bias.
+            M<sub>ij</sub> = f(r<sub>i</sub> - r<sub>j</sub>), where f is an integrable geometric modulation function.
         </div>
-
         <p class="text">
-            Directly constructing $M$ is quadratic. Instead, RelFlexformer treats multiplication by $M$
-            as a fast operator. Given a vector $u$, it computes $Mu$ using a Fourier-domain representation
-            and the Non-Uniform Fast Fourier Transform.
+            Directly constructing M is quadratic. Instead, the paper reduces efficient RPE attention to repeatedly computing mask-vector products Mu and implements those products with forward NU-FFT, Fourier-domain modulation, and inverse NU-FFT.
         </p>
-
-        <div class="rlf-method-steps">
-            <div class="rlf-step">
-                <span class="rlf-step-number">1</span>
-                <h3>Forward NU-FFT</h3>
-                <p>
-                    Map values defined on non-uniform 3D token coordinates into the frequency domain.
-                </p>
-            </div>
-
-            <div class="rlf-arrow">→</div>
-
-            <div class="rlf-step">
-                <span class="rlf-step-number">2</span>
-                <h3>Frequency modulation</h3>
-                <p>
-                    Multiply by the Fourier transform of the chosen relative positional encoding function.
-                </p>
-            </div>
-
-            <div class="rlf-arrow">→</div>
-
-            <div class="rlf-step">
-                <span class="rlf-step-number">3</span>
-                <h3>Inverse NU-FFT</h3>
-                <p>
-                    Return to the token domain and obtain the RPE-modulated mask-vector product.
-                </p>
-            </div>
+        <div class="rlf-figure">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 340" role="img" aria-label="NU-FFT method schematic">
+<rect width="1120" height="340" rx="28" fill="#f7fbfe"/>
+<rect x="90" y="70" width="270" height="190" rx="22" fill="#ffffff" stroke="#c8d7e1" stroke-width="1.2" filter="url(#none)"/>
+<circle cx="132" cy="105" r="24" fill="#1d4f6f"/>
+<text x="132" y="113" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="800" fill="#ffffff" text-anchor="middle">1</text>
+<text x="168" y="110" font-family="Inter, Arial, sans-serif" font-size="21" font-weight="800" fill="#17394f" text-anchor="start">Forward NU-FFT</text>
+<text x="225" y="170" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="500" fill="#536471" text-anchor="middle">point signal on</text>
+<text x="225" y="194" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="500" fill="#536471" text-anchor="middle">non-uniform coordinates</text>
+<line x1="372" y1="165" x2="416" y2="165" stroke="#1d4f6f" stroke-width="3" stroke-linecap="round"/><polygon points="416,165 407.33974596215563,170.0 407.33974596215563,160.0" fill="#1d4f6f"/>
+<rect x="425" y="70" width="270" height="190" rx="22" fill="#ffffff" stroke="#c8d7e1" stroke-width="1.2" filter="url(#none)"/>
+<circle cx="467" cy="105" r="24" fill="#1d4f6f"/>
+<text x="467" y="113" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="800" fill="#ffffff" text-anchor="middle">2</text>
+<text x="503" y="110" font-family="Inter, Arial, sans-serif" font-size="21" font-weight="800" fill="#17394f" text-anchor="start">Frequency modulation</text>
+<text x="560" y="170" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="500" fill="#536471" text-anchor="middle">multiply by Fourier</text>
+<text x="560" y="194" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="500" fill="#536471" text-anchor="middle">transform of f</text>
+<line x1="707" y1="165" x2="751" y2="165" stroke="#1d4f6f" stroke-width="3" stroke-linecap="round"/><polygon points="751,165 742.3397459621556,170.0 742.3397459621556,160.0" fill="#1d4f6f"/>
+<rect x="760" y="70" width="270" height="190" rx="22" fill="#ffffff" stroke="#c8d7e1" stroke-width="1.2" filter="url(#none)"/>
+<circle cx="802" cy="105" r="24" fill="#1d4f6f"/>
+<text x="802" y="113" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="800" fill="#ffffff" text-anchor="middle">3</text>
+<text x="838" y="110" font-family="Inter, Arial, sans-serif" font-size="21" font-weight="800" fill="#17394f" text-anchor="start">Inverse NU-FFT</text>
+<text x="895" y="170" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="500" fill="#536471" text-anchor="middle">evaluate back at</text>
+<text x="895" y="194" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="500" fill="#536471" text-anchor="middle">token coordinates</text>
+<text x="560" y="312" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="800" fill="#17394f" text-anchor="middle">Mask-vector multiplication:  Mu  ~=  inverse NU-FFT( Fourier(f) * NU-FFT(u) )</text>
+</svg>
         </div>
-
         <div class="rlf-equation">
-            $$Mu \approx \mathrm{NUFFT}^{-1}\left(\mathcal{F}(f)\cdot \mathrm{NUFFT}(u)\right).$$
-        </div>
-
-        <p class="caption">
-            The important point is that RelFlexformer does not need to explicitly store the full RPE mask.
-            It only needs to apply the mask as an operator inside efficient attention.
-        </p>
-    </div>
-
-
-    <div class="container blog main" id="flexibility">
-        <h1>Flexible Relative Positional Encodings</h1>
-
-        <p class="text">
-            A key advantage of RelFlexformer is that the modulation function $f$ can be chosen to express
-            different geometric priors. This makes the framework more general than using a single fixed
-            positional encoding rule.
-        </p>
-
-        <div class="rlf-card-grid">
-            <div class="rlf-card">
-                <h3>Distance decay</h3>
-                <p>
-                    Encodes the intuition that nearby 3D tokens should interact more strongly than distant tokens.
-                </p>
-            </div>
-
-            <div class="rlf-card">
-                <h3>Oscillatory bias</h3>
-                <p>
-                    Allows sinusoidal or sinc-like modulation patterns that resemble Fourier positional encodings.
-                </p>
-            </div>
-
-            <div class="rlf-card">
-                <h3>Learnable geometry</h3>
-                <p>
-                    The modulation function can be adapted to the target task and data distribution.
-                </p>
-            </div>
-        </div>
-
-        <div class="rlf-equation">
-            $$\text{Different choices of } f \quad \Rightarrow \quad \text{different geometry-aware attention biases.}$$
+            Mu ~= inverse NU-FFT( Fourier(f) * NU-FFT(u) ).
         </div>
     </div>
 
-
-    <div class="container blog main gray" id="relation">
-        <h1>Relation to Existing Positional Encodings</h1>
-
+    <div class="container blog main gray" id="flexibility">
+        <div class="rlf-kicker">Flexible RPE</div>
+        <h1>One framework, many geometric priors</h1>
         <p class="text">
-            RelFlexformer can be viewed as a unifying framework for relative positional modulation.
-            RoPE-like harmonic modulation and STRING-style projection-based modulation can be interpreted
-            as special cases within this broader Fourier-operator perspective.
+            Different choices of the modulation function f induce different attention biases. This lets RelFlexformer express distance-decay, oscillatory, or learnable geometry without changing the underlying NU-FFT mask operator.
         </p>
-
+        <div class="rlf-figure">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 460" role="img" aria-label="Substitute for paper Figure 2 mask behavior">
+<rect width="100%" height="100%" rx="22" fill="#ffffff"/>
+<text x="560.0" y="35" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800" fill="#17394f" text-anchor="middle">Substitute for Fig. 2: Flexible RPE mask behavior</text>
+<rect x="44" y="74" width="500" height="330" rx="18" fill="#fbfdfe" stroke="#d7e0e7" stroke-width="1" />
+<text x="294.0" y="102" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="800" fill="#17394f" text-anchor="middle">Exponential-decay modulation</text>
+<line x1="92" y1="116.0" x2="522" y2="116.0" stroke="#e7eef3"/>
+<text x="84" y="120.0" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="end">1</text>
+<line x1="92" y1="176.0" x2="522" y2="176.0" stroke="#e7eef3"/>
+<text x="84" y="180.0" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="end">0.75</text>
+<line x1="92" y1="236.0" x2="522" y2="236.0" stroke="#e7eef3"/>
+<text x="84" y="240.0" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="end">0.5</text>
+<line x1="92" y1="296.0" x2="522" y2="296.0" stroke="#e7eef3"/>
+<text x="84" y="300.0" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="end">0.25</text>
+<line x1="92" y1="356.0" x2="522" y2="356.0" stroke="#e7eef3"/>
+<text x="84" y="360.0" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="end">0</text>
+<line x1="92.0" y1="116" x2="92.0" y2="356" stroke="#eef3f6"/>
+<text x="92.0" y="381" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="middle">0.0</text>
+<line x1="199.5" y1="116" x2="199.5" y2="356" stroke="#eef3f6"/>
+<text x="199.5" y="381" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="middle">0.5</text>
+<line x1="307.0" y1="116" x2="307.0" y2="356" stroke="#eef3f6"/>
+<text x="307.0" y="381" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="middle">1.0</text>
+<line x1="414.5" y1="116" x2="414.5" y2="356" stroke="#eef3f6"/>
+<text x="414.5" y="381" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="middle">1.5</text>
+<line x1="522.0" y1="116" x2="522.0" y2="356" stroke="#eef3f6"/>
+<text x="522.0" y="381" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="middle">2.0</text>
+<line x1="92" y1="116" x2="92" y2="356" stroke="#9cafbd"/>
+<line x1="92" y1="356" x2="522" y2="356" stroke="#9cafbd"/>
+<polyline points="92.0,116.0 96.3,127.6 100.7,138.6 105.0,149.1 109.4,159.1 113.7,168.6 118.1,177.7 122.4,186.3 126.7,194.5 131.1,202.3 135.4,209.7 139.8,216.8 144.1,223.5 148.5,229.9 152.8,236.0 157.2,241.8 161.5,247.3 165.8,252.5 170.2,257.5 174.5,262.3 178.9,266.8 183.2,271.1 187.6,275.2 191.9,279.1 196.2,282.8 200.6,286.4 204.9,289.7 209.3,292.9 213.6,296.0 218.0,298.9 222.3,301.6 226.6,304.3 231.0,306.8 235.3,309.1 239.7,311.4 244.0,313.6 248.4,315.6 252.7,317.6 257.1,319.4 261.4,321.2 265.7,322.9 270.1,324.5 274.4,326.0 278.8,327.4 283.1,328.8 287.5,330.1 291.8,331.4 296.1,332.6 300.5,333.7 304.8,334.8 309.2,335.8 313.5,336.8 317.9,337.7 322.2,338.6 326.5,339.4 330.9,340.2 335.2,341.0 339.6,341.7 343.9,342.4 348.3,343.1 352.6,343.7 356.9,344.3 361.3,344.8 365.6,345.4 370.0,345.9 374.3,346.4 378.7,346.8 383.0,347.3 387.4,347.7 391.7,348.1 396.0,348.5 400.4,348.9 404.7,349.2 409.1,349.5 413.4,349.8 417.8,350.1 422.1,350.4 426.4,350.7 430.8,350.9 435.1,351.2 439.5,351.4 443.8,351.6 448.2,351.9 452.5,352.1 456.8,352.2 461.2,352.4 465.5,352.6 469.9,352.8 474.2,352.9 478.6,353.1 482.9,353.2 487.3,353.3 491.6,353.5 495.9,353.6 500.3,353.7 504.6,353.8 509.0,353.9 513.3,354.0 517.7,354.1 522.0,354.2" fill="none" stroke="#1d4f6f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="92.0,116.0 96.3,116.5 100.7,118.0 105.0,120.4 109.4,123.7 113.7,127.9 118.1,133.0 122.4,138.8 126.7,145.4 131.1,152.6 135.4,160.3 139.8,168.5 144.1,177.1 148.5,186.0 152.8,195.1 157.2,204.4 161.5,213.7 165.8,222.9 170.2,232.1 174.5,241.1 178.9,249.9 183.2,258.4 187.6,266.6 191.9,274.5 196.2,281.9 200.6,289.0 204.9,295.6 209.3,301.8 213.6,307.5 218.0,312.9 222.3,317.8 226.6,322.2 231.0,326.3 235.3,330.0 239.7,333.3 244.0,336.3 248.4,339.0 252.7,341.3 257.1,343.4 261.4,345.2 265.7,346.8 270.1,348.2 274.4,349.4 278.8,350.5 283.1,351.4 287.5,352.1 291.8,352.8 296.1,353.4 300.5,353.8 304.8,354.2 309.2,354.5 313.5,354.8 317.9,355.0 322.2,355.2 326.5,355.4 330.9,355.5 335.2,355.6 339.6,355.7 343.9,355.7 348.3,355.8 352.6,355.8 356.9,355.9 361.3,355.9 365.6,355.9 370.0,355.9 374.3,356.0 378.7,356.0 383.0,356.0 387.4,356.0 391.7,356.0 396.0,356.0 400.4,356.0 404.7,356.0 409.1,356.0 413.4,356.0 417.8,356.0 422.1,356.0 426.4,356.0 430.8,356.0 435.1,356.0 439.5,356.0 443.8,356.0 448.2,356.0 452.5,356.0 456.8,356.0 461.2,356.0 465.5,356.0 469.9,356.0 474.2,356.0 478.6,356.0 482.9,356.0 487.3,356.0 491.6,356.0 495.9,356.0 500.3,356.0 504.6,356.0 509.0,356.0 513.3,356.0 517.7,356.0 522.0,356.0" fill="none" stroke="#ef4444" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<polyline points="92.0,116.0 96.3,130.1 100.7,143.4 105.0,155.9 109.4,167.7 113.7,178.7 118.1,189.2 122.4,199.0 126.7,208.2 131.1,216.9 135.4,225.1 139.8,232.8 144.1,240.0 148.5,246.8 152.8,253.3 157.2,259.3 161.5,265.0 165.8,270.3 170.2,275.4 174.5,280.1 178.9,284.6 183.2,288.8 187.6,292.7 191.9,296.5 196.2,300.0 200.6,303.3 204.9,306.4 209.3,309.3 213.6,312.0 218.0,314.6 222.3,317.0 226.6,319.3 231.0,321.5 235.3,323.5 239.7,325.4 244.0,327.2 248.4,328.9 252.7,330.5 257.1,332.0 261.4,333.4 265.7,334.7 270.1,336.0 274.4,337.2 278.8,338.3 283.1,339.3 287.5,340.3 291.8,341.2 296.1,342.1 300.5,342.9 304.8,343.7 309.2,344.4 313.5,345.1 317.9,345.7 322.2,346.3 326.5,346.9 330.9,347.4 335.2,347.9 339.6,348.4 343.9,348.9 348.3,349.3 352.6,349.7 356.9,350.0 361.3,350.4 365.6,350.7 370.0,351.0 374.3,351.3 378.7,351.6 383.0,351.9 387.4,352.1 391.7,352.3 396.0,352.6 400.4,352.8 404.7,352.9 409.1,353.1 413.4,353.3 417.8,353.5 422.1,353.6 426.4,353.7 430.8,353.9 435.1,354.0 439.5,354.1 443.8,354.2 448.2,354.3 452.5,354.4 456.8,354.5 461.2,354.6 465.5,354.7 469.9,354.8 474.2,354.8 478.6,354.9 482.9,355.0 487.3,355.0 491.6,355.1 495.9,355.1 500.3,355.2 504.6,355.2 509.0,355.3 513.3,355.3 517.7,355.4 522.0,355.4" fill="none" stroke="#22a06b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<line x1="102" y1="128" x2="126" y2="128" stroke="#1d4f6f" stroke-width="3"/>
+<text x="133" y="133" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="600" fill="#2f3d49" text-anchor="start">Custom</text>
+<line x1="102" y1="148" x2="126" y2="148" stroke="#ef4444" stroke-width="3" stroke-dasharray="7 5"/>
+<text x="133" y="153" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="600" fill="#2f3d49" text-anchor="start">Heat/RBF</text>
+<line x1="102" y1="168" x2="126" y2="168" stroke="#22a06b" stroke-width="3" stroke-dasharray="7 5"/>
+<text x="133" y="173" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="600" fill="#2f3d49" text-anchor="start">Laplace</text>
+<text x="307.0" y="398" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="600" fill="#687887" text-anchor="middle">pairwise Euclidean distance</text>
+<rect x="576" y="74" width="500" height="330" rx="18" fill="#fbfdfe" stroke="#d7e0e7" stroke-width="1" />
+<text x="826.0" y="102" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="800" fill="#17394f" text-anchor="middle">Sinc-like modulation</text>
+<line x1="624" y1="116.0" x2="1054" y2="116.0" stroke="#e7eef3"/>
+<text x="616" y="120.0" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="end">1</text>
+<line x1="624" y1="176.0" x2="1054" y2="176.0" stroke="#e7eef3"/>
+<text x="616" y="180.0" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="end">0.75</text>
+<line x1="624" y1="236.0" x2="1054" y2="236.0" stroke="#e7eef3"/>
+<text x="616" y="240.0" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="end">0.5</text>
+<line x1="624" y1="296.0" x2="1054" y2="296.0" stroke="#e7eef3"/>
+<text x="616" y="300.0" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="end">0.25</text>
+<line x1="624" y1="356.0" x2="1054" y2="356.0" stroke="#e7eef3"/>
+<text x="616" y="360.0" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="end">0</text>
+<line x1="624.0" y1="116" x2="624.0" y2="356" stroke="#eef3f6"/>
+<text x="624.0" y="381" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="middle">0.0</text>
+<line x1="731.5" y1="116" x2="731.5" y2="356" stroke="#eef3f6"/>
+<text x="731.5" y="381" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="middle">0.5</text>
+<line x1="839.0" y1="116" x2="839.0" y2="356" stroke="#eef3f6"/>
+<text x="839.0" y="381" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="middle">1.0</text>
+<line x1="946.5" y1="116" x2="946.5" y2="356" stroke="#eef3f6"/>
+<text x="946.5" y="381" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="middle">1.5</text>
+<line x1="1054.0" y1="116" x2="1054.0" y2="356" stroke="#eef3f6"/>
+<text x="1054.0" y="381" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="middle">2.0</text>
+<line x1="624" y1="116" x2="624" y2="356" stroke="#9cafbd"/>
+<line x1="624" y1="356" x2="1054" y2="356" stroke="#9cafbd"/>
+<polyline points="624.0,116.0 628.3,119.4 632.7,123.3 637.0,127.8 641.4,132.6 645.7,137.9 650.1,143.6 654.4,149.7 658.7,156.1 663.1,162.9 667.4,169.9 671.8,177.2 676.1,184.6 680.5,192.3 684.8,200.1 689.2,208.0 693.5,216.0 697.8,224.0 702.2,232.1 706.5,240.1 710.9,248.1 715.2,256.0 719.6,263.9 723.9,271.6 728.2,279.2 732.6,286.6 736.9,293.8 741.3,300.8 745.6,307.5 750.0,314.0 754.3,320.3 758.6,326.3 763.0,332.0 767.3,337.4 771.7,342.5 776.0,347.3 780.4,351.7 784.7,355.9 789.1,352.3 793.4,348.8 797.7,345.6 802.1,342.7 806.4,340.1 810.8,337.8 815.1,335.9 819.5,334.2 823.8,332.8 828.1,331.7 832.5,330.8 836.8,330.2 841.2,329.8 845.5,329.7 849.9,329.7 854.2,330.0 858.5,330.4 862.9,331.0 867.2,331.8 871.6,332.7 875.9,333.7 880.3,334.9 884.6,336.1 888.9,337.4 893.3,338.8 897.6,340.2 902.0,341.6 906.3,343.1 910.7,344.6 915.0,346.1 919.4,347.6 923.7,349.1 928.0,350.6 932.4,352.0 936.7,353.4 941.1,354.7 945.4,355.9 949.8,354.9 954.1,353.7 958.4,352.7 962.8,351.7 967.1,350.8 971.5,350.0 975.8,349.3 980.2,348.7 984.5,348.1 988.8,347.6 993.2,347.3 997.5,347.0 1001.9,346.8 1006.2,346.6 1010.6,346.6 1014.9,346.6 1019.3,346.7 1023.6,346.8 1027.9,347.0 1032.3,347.3 1036.6,347.6 1041.0,348.0 1045.3,348.4 1049.7,348.9 1054.0,349.3" fill="none" stroke="#1d4f6f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="624.0,116.0 628.3,116.5 632.7,118.0 637.0,120.4 641.4,123.7 645.7,127.9 650.1,133.0 654.4,138.8 658.7,145.4 663.1,152.6 667.4,160.3 671.8,168.5 676.1,177.1 680.5,186.0 684.8,195.1 689.2,204.4 693.5,213.7 697.8,222.9 702.2,232.1 706.5,241.1 710.9,249.9 715.2,258.4 719.6,266.6 723.9,274.5 728.2,281.9 732.6,289.0 736.9,295.6 741.3,301.8 745.6,307.5 750.0,312.9 754.3,317.8 758.6,322.2 763.0,326.3 767.3,330.0 771.7,333.3 776.0,336.3 780.4,339.0 784.7,341.3 789.1,343.4 793.4,345.2 797.7,346.8 802.1,348.2 806.4,349.4 810.8,350.5 815.1,351.4 819.5,352.1 823.8,352.8 828.1,353.4 832.5,353.8 836.8,354.2 841.2,354.5 845.5,354.8 849.9,355.0 854.2,355.2 858.5,355.4 862.9,355.5 867.2,355.6 871.6,355.7 875.9,355.7 880.3,355.8 884.6,355.8 888.9,355.9 893.3,355.9 897.6,355.9 902.0,355.9 906.3,356.0 910.7,356.0 915.0,356.0 919.4,356.0 923.7,356.0 928.0,356.0 932.4,356.0 936.7,356.0 941.1,356.0 945.4,356.0 949.8,356.0 954.1,356.0 958.4,356.0 962.8,356.0 967.1,356.0 971.5,356.0 975.8,356.0 980.2,356.0 984.5,356.0 988.8,356.0 993.2,356.0 997.5,356.0 1001.9,356.0 1006.2,356.0 1010.6,356.0 1014.9,356.0 1019.3,356.0 1023.6,356.0 1027.9,356.0 1032.3,356.0 1036.6,356.0 1041.0,356.0 1045.3,356.0 1049.7,356.0 1054.0,356.0" fill="none" stroke="#ef4444" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<polyline points="624.0,116.0 628.3,130.1 632.7,143.4 637.0,155.9 641.4,167.7 645.7,178.7 650.1,189.2 654.4,199.0 658.7,208.2 663.1,216.9 667.4,225.1 671.8,232.8 676.1,240.0 680.5,246.8 684.8,253.3 689.2,259.3 693.5,265.0 697.8,270.3 702.2,275.4 706.5,280.1 710.9,284.6 715.2,288.8 719.6,292.7 723.9,296.5 728.2,300.0 732.6,303.3 736.9,306.4 741.3,309.3 745.6,312.0 750.0,314.6 754.3,317.0 758.6,319.3 763.0,321.5 767.3,323.5 771.7,325.4 776.0,327.2 780.4,328.9 784.7,330.5 789.1,332.0 793.4,333.4 797.7,334.7 802.1,336.0 806.4,337.2 810.8,338.3 815.1,339.3 819.5,340.3 823.8,341.2 828.1,342.1 832.5,342.9 836.8,343.7 841.2,344.4 845.5,345.1 849.9,345.7 854.2,346.3 858.5,346.9 862.9,347.4 867.2,347.9 871.6,348.4 875.9,348.9 880.3,349.3 884.6,349.7 888.9,350.0 893.3,350.4 897.6,350.7 902.0,351.0 906.3,351.3 910.7,351.6 915.0,351.9 919.4,352.1 923.7,352.3 928.0,352.6 932.4,352.8 936.7,352.9 941.1,353.1 945.4,353.3 949.8,353.5 954.1,353.6 958.4,353.7 962.8,353.9 967.1,354.0 971.5,354.1 975.8,354.2 980.2,354.3 984.5,354.4 988.8,354.5 993.2,354.6 997.5,354.7 1001.9,354.8 1006.2,354.8 1010.6,354.9 1014.9,355.0 1019.3,355.0 1023.6,355.1 1027.9,355.1 1032.3,355.2 1036.6,355.2 1041.0,355.3 1045.3,355.3 1049.7,355.4 1054.0,355.4" fill="none" stroke="#22a06b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<line x1="634" y1="128" x2="658" y2="128" stroke="#1d4f6f" stroke-width="3"/>
+<text x="665" y="133" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="600" fill="#2f3d49" text-anchor="start">Custom</text>
+<line x1="634" y1="148" x2="658" y2="148" stroke="#ef4444" stroke-width="3" stroke-dasharray="7 5"/>
+<text x="665" y="153" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="600" fill="#2f3d49" text-anchor="start">Heat/RBF</text>
+<line x1="634" y1="168" x2="658" y2="168" stroke="#22a06b" stroke-width="3" stroke-dasharray="7 5"/>
+<text x="665" y="173" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="600" fill="#2f3d49" text-anchor="start">Laplace</text>
+<text x="839.0" y="398" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="600" fill="#687887" text-anchor="middle">pairwise Euclidean distance</text>
+<text x="560.0" y="438" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#617282" text-anchor="middle">Different choices of f induce different distance-aware attention biases under the same NU-FFT operator.</text>
+</svg>
+        </div>
         <div class="rlf-card-grid four">
-            <div class="rlf-card">
-                <h3>RoPE-style</h3>
-                <p>
-                    Harmonic relative modulation can be represented through frequency components.
-                </p>
-            </div>
-
-            <div class="rlf-card">
-                <h3>STRING-style</h3>
-                <p>
-                    Projection-based cosine modulation can be handled as a structured choice of $f$.
-                </p>
-            </div>
-
-            <div class="rlf-card">
-                <h3>Distance kernels</h3>
-                <p>
-                    Radial or decay-based kernels can encode locality in 3D space.
-                </p>
-            </div>
-
-            <div class="rlf-card">
-                <h3>RelFlexformer</h3>
-                <p>
-                    Generalizes these ideas to flexible integrable RPE functions on irregular tokens.
-                </p>
-            </div>
+            <div class="rlf-card"><h3>RoPE-style</h3><p>Harmonic modulation can be represented through frequency components.</p></div>
+            <div class="rlf-card"><h3>STRING-style</h3><p>Projection-based cosine modulation can be handled as a structured choice of f.</p></div>
+            <div class="rlf-card"><h3>Distance kernels</h3><p>Radial or decay-based kernels encode locality in continuous 3D space.</p></div>
+            <div class="rlf-card"><h3>RelFlexformer</h3><p>Generalizes these ideas to irregular 3D token configurations.</p></div>
         </div>
     </div>
 
-
-    <div class="container blog main" id="main-results">
-        <h1>Results</h1>
-
+    <div class="container blog main" id="results">
+        <div class="rlf-kicker">Empirical Results</div>
+        <h1>Results across classification, 3D segmentation, and RGB-D segmentation</h1>
         <p class="text">
-            RelFlexformer is evaluated across object classification, 3D semantic segmentation, and RGB-D semantic
-            segmentation. The main empirical message is that flexible RPE substantially improves Performer-style
-            efficient attention and often closes the gap to dense attention.
+            The main empirical message is that flexible RPE substantially improves Performer-style efficient attention and often closes the gap to dense attention while preserving subquadratic scaling.
         </p>
-
-        <h2>Object Classification</h2>
-
-        <table class="rlf-result-table">
-            <thead>
-                <tr>
-                    <th>Method</th>
-                    <th>ModelNet40 OA</th>
-                    <th>ScanObjectNN OA</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Transformer</td>
-                    <td>93.20</td>
-                    <td>83.23</td>
-                </tr>
-                <tr>
-                    <td>Performer</td>
-                    <td>91.33</td>
-                    <td>81.76</td>
-                </tr>
-                <tr>
-                    <td><b>RelFlexformer</b></td>
-                    <td class="rlf-best">92.94</td>
-                    <td class="rlf-best">84.45</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <h2>3D Semantic Segmentation</h2>
-
-        <p class="text">
-            On large-scale 3D segmentation benchmarks, RelFlexformer consistently improves over the vanilla Performer
-            baseline by adding geometry-aware relative positional modulation.
-        </p>
-
-        <div class="rlf-improvement-list">
-            <div class="rlf-improvement">
-                <strong>ScanNet</strong>
-                <span class="rlf-score">74.8 → 76.8</span>
-            </div>
-
-            <div class="rlf-improvement">
-                <strong>ScanNet200</strong>
-                <span class="rlf-score">28.2 → 34.0</span>
-            </div>
-
-            <div class="rlf-improvement">
-                <strong>ScanNet++</strong>
-                <span class="rlf-score">48.1 → 48.7</span>
-            </div>
-
-            <div class="rlf-improvement">
-                <strong>nuScenes</strong>
-                <span class="rlf-score">72.0 → 80.3</span>
-            </div>
+        <h2>Object classification</h2>
+        <div class="rlf-figure">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 390" role="img" aria-label="Classification results chart">
+<rect width="100%" height="100%" rx="22" fill="#ffffff"/>
+<text x="560.0" y="34" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800" fill="#17394f" text-anchor="middle">Object classification: PCT backbone</text>
+<rect x="70" y="80" width="460" height="250" rx="18" fill="#fbfdfe" stroke="#d7e0e7" stroke-width="1" />
+<text x="300.0" y="110" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="800" fill="#17394f" text-anchor="middle">ModelNet40 OA</text>
+<line x1="130" y1="285" x2="500" y2="285" stroke="#9cafbd"/>
+<rect x="155" y="170.5999999999999" width="70" height="114.4000000000001" rx="8" fill="#94a3b8" opacity="0.95"/>
+<text x="190" y="162.5999999999999" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="800" fill="#17394f" text-anchor="middle">93.20</text>
+<text x="190" y="310" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#536471" text-anchor="middle">Transformer</text>
+<rect x="270" y="201.34499999999989" width="70" height="83.65500000000011" rx="8" fill="#3b82f6" opacity="0.95"/>
+<text x="305" y="193.34499999999989" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="800" fill="#17394f" text-anchor="middle">92.34</text>
+<text x="305" y="310" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#536471" text-anchor="middle">Performer</text>
+<rect x="385" y="179.8950000000001" width="70" height="105.10499999999992" rx="8" fill="#1d4f6f" opacity="0.95"/>
+<text x="420" y="171.8950000000001" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="800" fill="#17394f" text-anchor="middle">92.94</text>
+<text x="420" y="310" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#536471" text-anchor="middle">RelFlex</text>
+<text x="90" y="147" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="start">94</text>
+<text x="90" y="285" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="start">90</text>
+<rect x="590" y="80" width="460" height="250" rx="18" fill="#fbfdfe" stroke="#d7e0e7" stroke-width="1" />
+<text x="820.0" y="110" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="800" fill="#17394f" text-anchor="middle">ScanObjectNN OA</text>
+<line x1="650" y1="285" x2="1020" y2="285" stroke="#9cafbd"/>
+<rect x="675" y="189.66666666666669" width="70" height="95.33333333333333" rx="8" fill="#94a3b8" opacity="0.95"/>
+<text x="710" y="181.66666666666669" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="800" fill="#17394f" text-anchor="middle">84.00</text>
+<text x="710" y="310" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#536471" text-anchor="middle">Transformer</text>
+<rect x="790" y="229.70666666666682" width="70" height="55.29333333333317" rx="8" fill="#3b82f6" opacity="0.95"/>
+<text x="825" y="221.70666666666682" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="800" fill="#17394f" text-anchor="middle">83.16</text>
+<text x="825" y="310" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#536471" text-anchor="middle">Performer</text>
+<rect x="905" y="168.21666666666653" width="70" height="116.78333333333347" rx="8" fill="#1d4f6f" opacity="0.95"/>
+<text x="940" y="160.21666666666653" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="800" fill="#17394f" text-anchor="middle">84.45</text>
+<text x="940" y="310" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#536471" text-anchor="middle">RelFlex</text>
+<text x="610" y="147" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="start">85</text>
+<text x="610" y="285" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="start">82</text>
+<text x="560.0" y="368" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#617282" text-anchor="middle">Source numbers: paper Table 1. RelFlexformer recovers most of the Performer gap and surpasses dense attention on ScanObjectNN.</text>
+</svg>
         </div>
 
-        <h2>RGB-D Semantic Segmentation</h2>
+        <h2>3D semantic segmentation</h2>
+        <div class="rlf-figure">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 430" role="img" aria-label="3D segmentation improvements">
+<rect width="100%" height="100%" rx="22" fill="#ffffff"/>
+<text x="560.0" y="35" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800" fill="#17394f" text-anchor="middle">3D semantic segmentation: Performer -&gt; RelFlexformer</text>
+<rect x="70" y="80" width="460" height="120" rx="18" fill="#fbfdfe" stroke="#d7e0e7" stroke-width="1" />
+<text x="98" y="118" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800" fill="#17394f" text-anchor="start">ScanNet</text>
+<text x="98" y="158" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#6b7a87" text-anchor="start">Performer</text>
+<text x="205" y="158" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800" fill="#3b82f6" text-anchor="middle">74.8</text>
+<line x1="255" y1="150" x2="322" y2="150" stroke="#1d4f6f" stroke-width="3" stroke-linecap="round"/><polygon points="322,150 313.33974596215563,155.0 313.33974596215563,145.0" fill="#1d4f6f"/>
+<text x="375" y="158" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="900" fill="#1d4f6f" text-anchor="middle">76.8</text>
+<text x="440" y="158" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="900" fill="#1d4f6f" text-anchor="middle">+2.0</text>
+<text x="375" y="182" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#6b7a87" text-anchor="middle">RelFlexformer</text>
+<rect x="590" y="80" width="460" height="120" rx="18" fill="#fbfdfe" stroke="#d7e0e7" stroke-width="1" />
+<text x="618" y="118" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800" fill="#17394f" text-anchor="start">ScanNet200</text>
+<text x="618" y="158" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#6b7a87" text-anchor="start">Performer</text>
+<text x="725" y="158" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800" fill="#3b82f6" text-anchor="middle">28.2</text>
+<line x1="775" y1="150" x2="842" y2="150" stroke="#1d4f6f" stroke-width="3" stroke-linecap="round"/><polygon points="842,150 833.3397459621556,155.0 833.3397459621556,145.0" fill="#1d4f6f"/>
+<text x="895" y="158" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="900" fill="#1d4f6f" text-anchor="middle">34.0</text>
+<text x="960" y="158" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="900" fill="#1d4f6f" text-anchor="middle">+5.8</text>
+<text x="895" y="182" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#6b7a87" text-anchor="middle">RelFlexformer</text>
+<rect x="70" y="240" width="460" height="120" rx="18" fill="#fbfdfe" stroke="#d7e0e7" stroke-width="1" />
+<text x="98" y="278" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800" fill="#17394f" text-anchor="start">ScanNet++</text>
+<text x="98" y="318" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#6b7a87" text-anchor="start">Performer</text>
+<text x="205" y="318" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800" fill="#3b82f6" text-anchor="middle">48.1</text>
+<line x1="255" y1="310" x2="322" y2="310" stroke="#1d4f6f" stroke-width="3" stroke-linecap="round"/><polygon points="322,310 313.33974596215563,315.0 313.33974596215563,305.0" fill="#1d4f6f"/>
+<text x="375" y="318" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="900" fill="#1d4f6f" text-anchor="middle">48.7</text>
+<text x="440" y="318" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="900" fill="#1d4f6f" text-anchor="middle">+0.6</text>
+<text x="375" y="342" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#6b7a87" text-anchor="middle">RelFlexformer</text>
+<rect x="590" y="240" width="460" height="120" rx="18" fill="#fbfdfe" stroke="#d7e0e7" stroke-width="1" />
+<text x="618" y="278" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800" fill="#17394f" text-anchor="start">nuScenes</text>
+<text x="618" y="318" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#6b7a87" text-anchor="start">Performer</text>
+<text x="725" y="318" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800" fill="#3b82f6" text-anchor="middle">72.0</text>
+<line x1="775" y1="310" x2="842" y2="310" stroke="#1d4f6f" stroke-width="3" stroke-linecap="round"/><polygon points="842,310 833.3397459621556,315.0 833.3397459621556,305.0" fill="#1d4f6f"/>
+<text x="895" y="318" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="900" fill="#1d4f6f" text-anchor="middle">80.3</text>
+<text x="960" y="318" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="900" fill="#1d4f6f" text-anchor="middle">+8.3</text>
+<text x="895" y="342" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#6b7a87" text-anchor="middle">RelFlexformer</text>
+<text x="560.0" y="405" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#617282" text-anchor="middle">Source numbers: paper Table 2 mIoU. Arrows emphasize the gain over vanilla Performer attention.</text>
+</svg>
+        </div>
 
-        <table class="rlf-result-table">
-            <thead>
-                <tr>
-                    <th>Method</th>
-                    <th>Complexity</th>
-                    <th>NYU Depth v2</th>
-                    <th>SUN RGB-D</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Softmax Attention</td>
-                    <td>$O(n^2)$</td>
-                    <td>55.60</td>
-                    <td>51.20</td>
-                </tr>
-                <tr>
-                    <td>Performer</td>
-                    <td>$O(n)$</td>
-                    <td>54.44</td>
-                    <td>48.49</td>
-                </tr>
-                <tr>
-                    <td>Performer + STRING</td>
-                    <td>$O(n \log n)$</td>
-                    <td>54.96</td>
-                    <td>50.87</td>
-                </tr>
-                <tr>
-                    <td><b>RelFlexformer</b></td>
-                    <td>$O(n \log n)$</td>
-                    <td class="rlf-best">55.32</td>
-                    <td class="rlf-best">51.04</td>
-                </tr>
-            </tbody>
-        </table>
+        <h2>RGB-D semantic segmentation</h2>
+        <div class="rlf-figure">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 360" role="img" aria-label="RGB-D semantic segmentation table">
+<rect width="100%" height="100%" rx="22" fill="#ffffff"/>
+<text x="560.0" y="34" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800" fill="#17394f" text-anchor="middle">RGB-D semantic segmentation: DFormer-Base</text>
+<rect x="95" y="70" width="930" height="230" rx="18" fill="#fbfdfe" stroke="#d7e0e7" stroke-width="1" />
+<rect x="95" y="70" width="930" height="48" rx="18" fill="#17394f"/>
+<rect x="95" y="100" width="930" height="18" fill="#17394f"/>
+<text x="115" y="101" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="800" fill="#ffffff" text-anchor="start">Method</text>
+<text x="445" y="101" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="800" fill="#ffffff" text-anchor="start">Complexity</text>
+<text x="635" y="101" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="800" fill="#ffffff" text-anchor="start">NYU v2</text>
+<text x="815" y="101" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="800" fill="#ffffff" text-anchor="start">SUN RGB-D</text>
+<rect x="95" y="118" width="930" height="44" fill="#ffffff"/>
+<text x="115" y="146" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="600" fill="#263746" text-anchor="start">Softmax</text>
+<text x="445" y="146" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="600" fill="#263746" text-anchor="start">O(n^2)</text>
+<text x="635" y="146" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="600" fill="#263746" text-anchor="start">55.60</text>
+<text x="815" y="146" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="600" fill="#263746" text-anchor="start">51.20</text>
+<rect x="95" y="162" width="930" height="44" fill="#f8fbfd"/>
+<text x="115" y="190" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="600" fill="#263746" text-anchor="start">Performer</text>
+<text x="445" y="190" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="600" fill="#263746" text-anchor="start">O(n)</text>
+<text x="635" y="190" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="600" fill="#263746" text-anchor="start">54.44</text>
+<text x="815" y="190" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="600" fill="#263746" text-anchor="start">48.49</text>
+<rect x="95" y="206" width="930" height="44" fill="#ffffff"/>
+<text x="115" y="234" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="600" fill="#263746" text-anchor="start">Performer + STRING</text>
+<text x="445" y="234" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="600" fill="#263746" text-anchor="start">O(n log n)</text>
+<text x="635" y="234" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="600" fill="#263746" text-anchor="start">54.96</text>
+<text x="815" y="234" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="600" fill="#263746" text-anchor="start">50.87</text>
+<rect x="95" y="250" width="930" height="44" fill="#edf5f9"/>
+<text x="115" y="278" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="900" fill="#263746" text-anchor="start">RelFlexformer</text>
+<text x="445" y="278" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="900" fill="#263746" text-anchor="start">O(n log n)</text>
+<text x="635" y="278" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="900" fill="#1d4f6f" text-anchor="start">55.32</text>
+<text x="815" y="278" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="900" fill="#1d4f6f" text-anchor="start">51.04</text>
+<text x="560.0" y="335" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#617282" text-anchor="middle">Source numbers: paper Table 4. RelFlexformer is the best sub-quadratic variant in both RGB-D benchmarks.</text>
+</svg>
+        </div>
     </div>
-
 
     <div class="container blog main gray" id="efficiency">
-        <h1>Efficiency</h1>
-
+        <div class="rlf-kicker">Efficiency</div>
+        <h1>Geometry-aware attention without quadratic mask construction</h1>
         <p class="text">
-            RelFlexformer introduces a small overhead compared to vanilla Performer, but avoids the quadratic memory
-            and time cost of dense attention. The key operation is FastMult, which computes the RPE mask-vector product
-            without constructing the full pairwise mask.
+            The cost trade-off is explicit: RelFlexformer introduces a logarithmic overhead over vanilla Performer in exchange for flexible relative positional encoding. The critical operation is FastMult, which applies the RPE mask-vector product without constructing the full pairwise mask.
         </p>
-
-        <div class="rlf-card-grid">
-            <div class="rlf-card">
-                <h3>Dense Attention</h3>
-                <p>
-                    Requires $O(L^2)$ attention scores and becomes expensive for long 3D token sequences.
-                </p>
+        <div class="rlf-figure-grid">
+            <div class="rlf-figure">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 360" role="img" aria-label="Substitute for Fig. 1-middle: Naive mask vs. FastMult">
+<rect width="100%" height="100%" rx="22" fill="#ffffff"/>
+<text x="270.0" y="34" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800" fill="#17394f" text-anchor="middle">Substitute for Fig. 1-middle: Naive mask vs. FastMult</text>
+<line x1="80" y1="58.0" x2="500" y2="58.0" stroke="#e4ebf0"/>
+<line x1="80" y1="116.0" x2="500" y2="116.0" stroke="#e4ebf0"/>
+<line x1="80" y1="174.0" x2="500" y2="174.0" stroke="#e4ebf0"/>
+<line x1="80" y1="232.0" x2="500" y2="232.0" stroke="#e4ebf0"/>
+<line x1="80" y1="290.0" x2="500" y2="290.0" stroke="#e4ebf0"/>
+<line x1="80.0" y1="58" x2="80.0" y2="290" stroke="#eef3f6"/>
+<text x="80.0" y="320" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="500" fill="#617282" text-anchor="middle">256</text>
+<line x1="150.0" y1="58" x2="150.0" y2="290" stroke="#eef3f6"/>
+<text x="150.0" y="320" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="500" fill="#617282" text-anchor="middle">512</text>
+<line x1="220.0" y1="58" x2="220.0" y2="290" stroke="#eef3f6"/>
+<text x="220.0" y="320" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="500" fill="#617282" text-anchor="middle">1k</text>
+<line x1="290.0" y1="58" x2="290.0" y2="290" stroke="#eef3f6"/>
+<text x="290.0" y="320" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="500" fill="#617282" text-anchor="middle">2k</text>
+<line x1="360.0" y1="58" x2="360.0" y2="290" stroke="#eef3f6"/>
+<text x="360.0" y="320" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="500" fill="#617282" text-anchor="middle">4k</text>
+<line x1="430.0" y1="58" x2="430.0" y2="290" stroke="#eef3f6"/>
+<text x="430.0" y="320" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="500" fill="#617282" text-anchor="middle">8k</text>
+<line x1="500.0" y1="58" x2="500.0" y2="290" stroke="#eef3f6"/>
+<text x="500.0" y="320" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="500" fill="#617282" text-anchor="middle">16k</text>
+<line x1="80" y1="58" x2="80" y2="290" stroke="#9cafbd"/>
+<line x1="80" y1="290" x2="500" y2="290" stroke="#9cafbd"/>
+<text x="70" y="63.0" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="500" fill="#617282" text-anchor="end">3.4e+02</text>
+<text x="70" y="121.0" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="500" fill="#617282" text-anchor="end">65</text>
+<text x="70" y="179.0" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="500" fill="#617282" text-anchor="end">12</text>
+<text x="70" y="237.0" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="500" fill="#617282" text-anchor="end">2.4</text>
+<text x="70" y="295.0" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="500" fill="#617282" text-anchor="end">0.45</text>
+<text x="25" y="174.0" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="700" fill="#617282" text-anchor="middle">time (relative)</text>
+<polyline points="80.0,262.0 150.0,241.5 220.0,218.2 290.0,185.1 360.0,145.4 430.0,102.6 500.0,58.0" fill="none" stroke="#ef4444" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="80.0" cy="262.0" r="4.5" fill="#ef4444" stroke="#fff" stroke-width="1.5"/>
+<circle cx="150.0" cy="241.5" r="4.5" fill="#ef4444" stroke="#fff" stroke-width="1.5"/>
+<circle cx="220.0" cy="218.2" r="4.5" fill="#ef4444" stroke="#fff" stroke-width="1.5"/>
+<circle cx="290.0" cy="185.1" r="4.5" fill="#ef4444" stroke="#fff" stroke-width="1.5"/>
+<circle cx="360.0" cy="145.4" r="4.5" fill="#ef4444" stroke="#fff" stroke-width="1.5"/>
+<circle cx="430.0" cy="102.6" r="4.5" fill="#ef4444" stroke="#fff" stroke-width="1.5"/>
+<circle cx="500.0" cy="58.0" r="4.5" fill="#ef4444" stroke="#fff" stroke-width="1.5"/>
+<line x1="92" y1="70" x2="118" y2="70" stroke="#ef4444" stroke-width="3"/>
+<text x="126" y="75" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#2f3d49" text-anchor="start">Naive</text>
+<polyline points="80.0,290.0 150.0,286.3 220.0,278.8 290.0,263.8 360.0,243.5 430.0,223.6 500.0,209.4" fill="none" stroke="#f59e0b" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="80.0" cy="290.0" r="4.5" fill="#f59e0b" stroke="#fff" stroke-width="1.5"/>
+<circle cx="150.0" cy="286.3" r="4.5" fill="#f59e0b" stroke="#fff" stroke-width="1.5"/>
+<circle cx="220.0" cy="278.8" r="4.5" fill="#f59e0b" stroke="#fff" stroke-width="1.5"/>
+<circle cx="290.0" cy="263.8" r="4.5" fill="#f59e0b" stroke="#fff" stroke-width="1.5"/>
+<circle cx="360.0" cy="243.5" r="4.5" fill="#f59e0b" stroke="#fff" stroke-width="1.5"/>
+<circle cx="430.0" cy="223.6" r="4.5" fill="#f59e0b" stroke="#fff" stroke-width="1.5"/>
+<circle cx="500.0" cy="209.4" r="4.5" fill="#f59e0b" stroke="#fff" stroke-width="1.5"/>
+<line x1="92" y1="94" x2="118" y2="94" stroke="#f59e0b" stroke-width="3"/>
+<text x="126" y="99" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#2f3d49" text-anchor="start">FastMult</text>
+<text x="270.0" y="344" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="500" fill="#6d7b86" text-anchor="middle">FastMult avoids explicit L x L mask construction.</text>
+</svg>
             </div>
-
-            <div class="rlf-card">
-                <h3>Performer</h3>
-                <p>
-                    Efficient $O(L)$ kernelized attention, but less expressive for arbitrary RPE masks.
-                </p>
-            </div>
-
-            <div class="rlf-card">
-                <h3>RelFlexformer</h3>
-                <p>
-                    Uses $O(L \log L)$ computation to inject flexible relative positional encodings.
-                </p>
+            <div class="rlf-figure">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 360" role="img" aria-label="Substitute for Fig. 1-right: Quadrature error">
+<rect width="100%" height="100%" rx="22" fill="#ffffff"/>
+<text x="270.0" y="34" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800" fill="#17394f" text-anchor="middle">Substitute for Fig. 1-right: Quadrature error</text>
+<line x1="80" y1="58.0" x2="500" y2="58.0" stroke="#e4ebf0"/>
+<line x1="80" y1="116.0" x2="500" y2="116.0" stroke="#e4ebf0"/>
+<line x1="80" y1="174.0" x2="500" y2="174.0" stroke="#e4ebf0"/>
+<line x1="80" y1="232.0" x2="500" y2="232.0" stroke="#e4ebf0"/>
+<line x1="80" y1="290.0" x2="500" y2="290.0" stroke="#e4ebf0"/>
+<line x1="80.0" y1="58" x2="80.0" y2="290" stroke="#eef3f6"/>
+<text x="80.0" y="320" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="500" fill="#617282" text-anchor="middle">4</text>
+<line x1="140.0" y1="58" x2="140.0" y2="290" stroke="#eef3f6"/>
+<text x="140.0" y="320" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="500" fill="#617282" text-anchor="middle">8</text>
+<line x1="200.0" y1="58" x2="200.0" y2="290" stroke="#eef3f6"/>
+<text x="200.0" y="320" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="500" fill="#617282" text-anchor="middle">16</text>
+<line x1="260.0" y1="58" x2="260.0" y2="290" stroke="#eef3f6"/>
+<text x="260.0" y="320" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="500" fill="#617282" text-anchor="middle">32</text>
+<line x1="320.0" y1="58" x2="320.0" y2="290" stroke="#eef3f6"/>
+<text x="320.0" y="320" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="500" fill="#617282" text-anchor="middle">64</text>
+<line x1="380.0" y1="58" x2="380.0" y2="290" stroke="#eef3f6"/>
+<text x="380.0" y="320" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="500" fill="#617282" text-anchor="middle">128</text>
+<line x1="440.0" y1="58" x2="440.0" y2="290" stroke="#eef3f6"/>
+<text x="440.0" y="320" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="500" fill="#617282" text-anchor="middle">256</text>
+<line x1="500.0" y1="58" x2="500.0" y2="290" stroke="#eef3f6"/>
+<text x="500.0" y="320" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="500" fill="#617282" text-anchor="middle">512</text>
+<line x1="80" y1="58" x2="80" y2="290" stroke="#9cafbd"/>
+<line x1="80" y1="290" x2="500" y2="290" stroke="#9cafbd"/>
+<text x="70" y="63.0" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="500" fill="#617282" text-anchor="end">0.55</text>
+<text x="70" y="121.0" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="500" fill="#617282" text-anchor="end">0.31</text>
+<text x="70" y="179.0" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="500" fill="#617282" text-anchor="end">0.17</text>
+<text x="70" y="237.0" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="500" fill="#617282" text-anchor="end">0.095</text>
+<text x="70" y="295.0" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="500" fill="#617282" text-anchor="end">0.053</text>
+<text x="25" y="174.0" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="700" fill="#617282" text-anchor="middle">relative error</text>
+<polyline points="80.0,58.0 140.0,89.6 200.0,121.5 260.0,153.5 320.0,186.8 380.0,222.2 440.0,255.6 500.0,290.0" fill="none" stroke="#8b5cf6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="80.0" cy="58.0" r="4.5" fill="#8b5cf6" stroke="#fff" stroke-width="1.5"/>
+<circle cx="140.0" cy="89.6" r="4.5" fill="#8b5cf6" stroke="#fff" stroke-width="1.5"/>
+<circle cx="200.0" cy="121.5" r="4.5" fill="#8b5cf6" stroke="#fff" stroke-width="1.5"/>
+<circle cx="260.0" cy="153.5" r="4.5" fill="#8b5cf6" stroke="#fff" stroke-width="1.5"/>
+<circle cx="320.0" cy="186.8" r="4.5" fill="#8b5cf6" stroke="#fff" stroke-width="1.5"/>
+<circle cx="380.0" cy="222.2" r="4.5" fill="#8b5cf6" stroke="#fff" stroke-width="1.5"/>
+<circle cx="440.0" cy="255.6" r="4.5" fill="#8b5cf6" stroke="#fff" stroke-width="1.5"/>
+<circle cx="500.0" cy="290.0" r="4.5" fill="#8b5cf6" stroke="#fff" stroke-width="1.5"/>
+<line x1="92" y1="70" x2="118" y2="70" stroke="#8b5cf6" stroke-width="3"/>
+<text x="126" y="75" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#2f3d49" text-anchor="start">MatVec error</text>
+<text x="270.0" y="344" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="500" fill="#6d7b86" text-anchor="middle">Approximation improves as S increases.</text>
+</svg>
             </div>
         </div>
-
-        <div class="rlf-mini-bars">
-            <div class="rlf-bar-row">
-                <strong>Transformer</strong>
-                <div class="rlf-bar-track">
-                    <div class="rlf-bar-fill" style="width: 100%;"></div>
-                </div>
-                <span>$O(L^2)$</span>
-            </div>
-
-            <div class="rlf-bar-row">
-                <strong>RelFlexformer</strong>
-                <div class="rlf-bar-track">
-                    <div class="rlf-bar-fill" style="width: 58%;"></div>
-                </div>
-                <span>$O(L\log L)$</span>
-            </div>
-
-            <div class="rlf-bar-row">
-                <strong>Performer</strong>
-                <div class="rlf-bar-track">
-                    <div class="rlf-bar-fill" style="width: 38%;"></div>
-                </div>
-                <span>$O(L)$</span>
-            </div>
-        </div>
-
-        <p class="caption">
-            The visualization is conceptual: RelFlexformer trades a moderate logarithmic overhead for flexible
-            geometry-aware relative positional encoding.
-        </p>
     </div>
 
-
     <div class="container blog main" id="ablation">
-        <h1>Additional Analysis</h1>
-
-        <h2>Effect of Quadrature Size</h2>
-
+        <div class="rlf-kicker">Ablation</div>
+        <h1>How much quadrature is enough?</h1>
         <p class="text">
-            The quadrature size $S$ controls the approximation quality of the Fourier-based mask-vector multiplication.
-            Increasing $S$ generally improves the approximation, but the best value is task-dependent and often saturates.
+            The quadrature size S controls the approximation budget of the Fourier-based mask-vector multiplication. Increasing S improves the approximation only up to a task-dependent saturation point, so the page should communicate this as a practical tuning knob rather than a universally larger-is-better parameter.
         </p>
-
-        <div class="rlf-card-grid">
-            <div class="rlf-card gray-card">
-                <h3>Small $S$</h3>
-                <p>
-                    Lower computational cost, but weaker approximation of the RPE operator.
-                </p>
-            </div>
-
-            <div class="rlf-card gray-card">
-                <h3>Moderate $S$</h3>
-                <p>
-                    Often enough to recover most of the benefit from flexible relative positional encoding.
-                </p>
-            </div>
-
-            <div class="rlf-card gray-card">
-                <h3>Large $S$</h3>
-                <p>
-                    More accurate approximation, but may provide diminishing returns depending on the task.
-                </p>
-            </div>
+        <div class="rlf-figure">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 420" role="img" aria-label="Quadrature size ablation substitute">
+<rect width="100%" height="100%" rx="22" fill="#ffffff"/>
+<text x="560.0" y="34" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800" fill="#17394f" text-anchor="middle">Substitute for Fig. 3: Quadrature size S ablation</text>
+<rect x="45" y="70" width="330" height="270" rx="18" fill="#fbfdfe" stroke="#d7e0e7" stroke-width="1" />
+<text x="210.0" y="98" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" fill="#17394f" text-anchor="middle">NYU Depth v2</text>
+<line x1="95" y1="115.0" x2="355" y2="115.0" stroke="#e7eef3"/>
+<line x1="95" y1="175.0" x2="355" y2="175.0" stroke="#e7eef3"/>
+<line x1="95" y1="235.0" x2="355" y2="235.0" stroke="#e7eef3"/>
+<line x1="95" y1="295.0" x2="355" y2="295.0" stroke="#e7eef3"/>
+<line x1="95" y1="115" x2="95" y2="295" stroke="#9cafbd"/>
+<line x1="95" y1="295" x2="355" y2="295" stroke="#9cafbd"/>
+<text x="95.0" y="317" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="middle">4</text>
+<text x="181.66666666666669" y="317" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="middle">8</text>
+<text x="268.33333333333337" y="317" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="middle">16</text>
+<text x="355.0" y="317" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="middle">32</text>
+<polyline points="95.0,265.0 181.7,217.6 268.3,145.0 355.0,193.9" fill="none" stroke="#10b981" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="95.0" cy="265.0" r="4.5" fill="#10b981" stroke="#fff" stroke-width="1.5"/>
+<circle cx="181.7" cy="217.6" r="4.5" fill="#10b981" stroke="#fff" stroke-width="1.5"/>
+<circle cx="268.3" cy="145.0" r="4.5" fill="#10b981" stroke="#fff" stroke-width="1.5"/>
+<text x="268.33333333333337" y="135.00000000000009" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="800" fill="#17394f" text-anchor="middle">55.32</text>
+<circle cx="355.0" cy="193.9" r="4.5" fill="#10b981" stroke="#fff" stroke-width="1.5"/>
+<text x="225.0" y="335" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#687887" text-anchor="middle">S</text>
+<rect x="405" y="70" width="330" height="270" rx="18" fill="#fbfdfe" stroke="#d7e0e7" stroke-width="1" />
+<text x="570.0" y="98" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" fill="#17394f" text-anchor="middle">ScanObjectNN v2</text>
+<line x1="455" y1="115.0" x2="715" y2="115.0" stroke="#e7eef3"/>
+<line x1="455" y1="175.0" x2="715" y2="175.0" stroke="#e7eef3"/>
+<line x1="455" y1="235.0" x2="715" y2="235.0" stroke="#e7eef3"/>
+<line x1="455" y1="295.0" x2="715" y2="295.0" stroke="#e7eef3"/>
+<line x1="455" y1="115" x2="455" y2="295" stroke="#9cafbd"/>
+<line x1="455" y1="295" x2="715" y2="295" stroke="#9cafbd"/>
+<text x="455.0" y="317" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="middle">16</text>
+<text x="520.0" y="317" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="middle">32</text>
+<text x="585.0" y="317" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="middle">64</text>
+<text x="650.0" y="317" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="middle">128</text>
+<text x="715.0" y="317" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="middle">256</text>
+<polyline points="455.0,265.0 520.0,220.8 585.0,196.6 650.0,145.0 715.0,159.7" fill="none" stroke="#3b82f6" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="455.0" cy="265.0" r="4.5" fill="#3b82f6" stroke="#fff" stroke-width="1.5"/>
+<circle cx="520.0" cy="220.8" r="4.5" fill="#3b82f6" stroke="#fff" stroke-width="1.5"/>
+<circle cx="585.0" cy="196.6" r="4.5" fill="#3b82f6" stroke="#fff" stroke-width="1.5"/>
+<circle cx="650.0" cy="145.0" r="4.5" fill="#3b82f6" stroke="#fff" stroke-width="1.5"/>
+<text x="650.0" y="134.99999999999974" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="800" fill="#17394f" text-anchor="middle">84.26</text>
+<circle cx="715.0" cy="159.7" r="4.5" fill="#3b82f6" stroke="#fff" stroke-width="1.5"/>
+<text x="585.0" y="335" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#687887" text-anchor="middle">S</text>
+<rect x="765" y="70" width="330" height="270" rx="18" fill="#fbfdfe" stroke="#d7e0e7" stroke-width="1" />
+<text x="930.0" y="98" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" fill="#17394f" text-anchor="middle">SUN RGB-D</text>
+<line x1="815" y1="115.0" x2="1075" y2="115.0" stroke="#e7eef3"/>
+<line x1="815" y1="175.0" x2="1075" y2="175.0" stroke="#e7eef3"/>
+<line x1="815" y1="235.0" x2="1075" y2="235.0" stroke="#e7eef3"/>
+<line x1="815" y1="295.0" x2="1075" y2="295.0" stroke="#e7eef3"/>
+<line x1="815" y1="115" x2="815" y2="295" stroke="#9cafbd"/>
+<line x1="815" y1="295" x2="1075" y2="295" stroke="#9cafbd"/>
+<text x="815.0" y="317" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="middle">4</text>
+<text x="880.0" y="317" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="middle">8</text>
+<text x="945.0" y="317" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="middle">16</text>
+<text x="1010.0" y="317" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="middle">32</text>
+<text x="1075.0" y="317" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="500" fill="#687887" text-anchor="middle">64</text>
+<polyline points="815.0,265.0 880.0,145.0 945.0,251.7 1010.0,162.8 1075.0,242.8" fill="none" stroke="#a855f7" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="815.0" cy="265.0" r="4.5" fill="#a855f7" stroke="#fff" stroke-width="1.5"/>
+<circle cx="880.0" cy="145.0" r="4.5" fill="#a855f7" stroke="#fff" stroke-width="1.5"/>
+<text x="880.0" y="135.00000000000054" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="800" fill="#17394f" text-anchor="middle">51.02</text>
+<circle cx="945.0" cy="251.7" r="4.5" fill="#a855f7" stroke="#fff" stroke-width="1.5"/>
+<circle cx="1010.0" cy="162.8" r="4.5" fill="#a855f7" stroke="#fff" stroke-width="1.5"/>
+<circle cx="1075.0" cy="242.8" r="4.5" fill="#a855f7" stroke="#fff" stroke-width="1.5"/>
+<text x="945.0" y="335" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#687887" text-anchor="middle">S</text>
+<text x="560.0" y="392" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#617282" text-anchor="middle">Recreated placeholder following the paper trend: performance saturates at a task-dependent quadrature budget.</text>
+</svg>
         </div>
-
-        <h2>Plug-in Backbones</h2>
-
-        <p class="text">
-            RelFlexformer is not tied to a single architecture. It can be integrated into multiple 3D perception
-            backbones by replacing or augmenting their efficient attention blocks.
-        </p>
-
         <div class="rlf-card-grid">
-            <div class="rlf-card">
-                <h3>PCT</h3>
-                <p>
-                    Used for object classification on ModelNet40 and ScanObjectNN.
-                </p>
-            </div>
-
-            <div class="rlf-card">
-                <h3>PTv3</h3>
-                <p>
-                    Used for point cloud semantic segmentation on large-scale 3D datasets.
-                </p>
-            </div>
-
-            <div class="rlf-card">
-                <h3>DFormer</h3>
-                <p>
-                    Used for RGB-D semantic segmentation on NYU Depth v2 and SUN RGB-D.
-                </p>
-            </div>
+            <div class="rlf-card gray-card"><h3>Small S</h3><p>Lower computational cost, but weaker approximation of the RPE operator.</p></div>
+            <div class="rlf-card gray-card"><h3>Moderate S</h3><p>Often enough to recover most of the gain from flexible relative positional encoding.</p></div>
+            <div class="rlf-card gray-card"><h3>Large S</h3><p>More accurate approximation, but may show diminishing returns depending on the task.</p></div>
         </div>
+    </div>
 
-        <h2>Scope</h2>
-
+    <div class="container blog main gray" id="scope">
+        <div class="rlf-kicker">Scope</div>
+        <h1>What this page should claim</h1>
         <div class="rlf-scope">
-            <p class="text">
-                RelFlexformer is designed to recover geometry-aware attention in efficient Transformer settings.
-                Dense softmax attention can still be competitive on some benchmarks, but RelFlexformer significantly
-                improves Performer-style attention while preserving subquadratic scalability.
+            <p class="text" style="margin:0;">
+                RelFlexformer is designed to recover geometry-aware attention in efficient Transformer settings. Dense softmax attention can still be competitive on some benchmarks, but RelFlexformer significantly improves Performer-style attention while preserving subquadratic scalability.
             </p>
         </div>
     </div>
 
-
-    <div class="container blog main gray" id="conclusion-relflexformer">
-        <h1>Conclusion</h1>
-
-        <p class="text">
-            RelFlexformer provides an efficient and flexible way to incorporate relative positional encodings into
-            3D Transformers. By formulating the RPE mask as a Fourier-based operator, it avoids explicit quadratic
-            mask construction while supporting irregular 3D token configurations. This makes it a practical approach
-            for scalable point cloud and RGB-D perception.
-        </p>
-
-        <div class="rlf-card-grid">
-            <div class="rlf-card">
-                <h3>Expressive RPE</h3>
-                <p>
-                    Uses integrable modulation functions to encode flexible geometric relations.
-                </p>
-            </div>
-
-            <div class="rlf-card">
-                <h3>Subquadratic Scaling</h3>
-                <p>
-                    Applies RPE masks through NU-FFT-based computation in $O(L \log L)$.
-                </p>
-            </div>
-
-            <div class="rlf-card">
-                <h3>Broad Validation</h3>
-                <p>
-                    Demonstrates gains across object classification, 3D segmentation, and RGB-D segmentation.
-                </p>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="container blog main" id="citation-relflexformer">
+    <div class="container blog main" id="citation">
+        <div class="rlf-kicker">Citation</div>
         <h1>Citation</h1>
-
-        <p class="text">
-            If you find this project useful, please consider citing our work.
-        </p>
-
+        <p class="text">If you find this project useful, please consider citing our work.</p>
 <pre><code class="plaintext">@article{kim2026relflexformer,
     title={RelFlexformer: Efficient Attention 3D-Transformers for Integrable Relative Positional Encodings},
     author={Kim, Byeongchan and Sehanobish, Arijit and Dubey, Avinava and Oh, Min-hwan and Choromanski, Krzysztof},
     journal={arXiv preprint arXiv:2605.10706},
     year={2026}
 }</code></pre>
-    </div>
-
-
-    <!-- Existing original placeholder section preserved -->
-    <div class="container blog main gray">
-        <img src="clarity/images/vit.png">
-        <p class="caption">
-            Erat id non venenatis nullam leo nisl risus fames. Quis montes tortor aenean posuere non. Maximus dui cras enim tristique; ipsum pellentesque ut. Mauris hac felis elit scelerisque nascetur risus adipiscing ultrices. Quis augue pulvinar laoreet facilisis vel. Pharetra blandit nunc id, sem cubilia sit porttitor. Montes hendrerit vestibulum vulputate tincidunt facilisis metus. Interdum mi vivamus nunc consectetur adipiscing; aptent semper dictum.
+        <p class="rlf-note">
+            Note: The figures on this page are recreated substitute visuals for the project page draft. Replace them with official cropped paper figures once the final figure assets are available.
         </p>
-    </div>
-
-    <div class="container blog main">
-        <h1>Results</h1>
-        <p class="text">
-            Arcu imperdiet nunc, dignissim ornare arcu nam eros cras venenatis. Non volutpat parturient luctus eros litora natoque; elementum dui. Nulla cubilia et nascetur dictum nisi phasellus. Natoque himenaeos porta vulputate interdum id mollis. Fames diam integer semper ligula per. Sapien ex magnis pellentesque neque rhoncus conubia. Purus torquent nunc ligula auctor cras pharetra. Porttitor vulputate dis ante suspendisse a iaculis massa sagittis.
-        </p>
-    </div>
-
-    <div class="container blog extra-large gray">
-        <div class="slide-menu">
-            <ul class="dots" id="slide-menu">
-                <li class="dot active"></li>
-                <li class="dot"></li>
-                <li class="dot"></li>
-            </ul>
-        </div>
-       
-        <div class="slide-content", style="display: block;">
-            <div class="columns-4">
-                <img src="https://clickprops.co.uk/wp-content/uploads/2022/05/PP15PS-California-Blue.jpg">
-                <img src="https://clickprops.co.uk/wp-content/uploads/2022/05/PP15PS-California-Blue.jpg">
-                <img src="https://clickprops.co.uk/wp-content/uploads/2022/05/PP15PS-California-Blue.jpg">
-                <img src="https://clickprops.co.uk/wp-content/uploads/2022/05/PP15PS-California-Blue.jpg">
-            </div>
-            <p class="caption">
-                Nulla quis porttitor varius phasellus dolor curae primis. Suscipit sit adipiscing nibh justo hac. Turpis massa ridiculus sit, finibus quis litora sagittis torquent. Dignissim suscipit quam curabitur sit velit, rhoncus tincidunt purus? At netus efficitur penatibus purus amet urna etiam. Leo neque ligula varius lacinia torquent vehicula. Tempus non mauris vel placerat natoque.
-            </p>
-        </div>
-
-        <div class="slide-content", style="display: none;">
-            <div class="columns-6">
-                <img src="https://clickprops.co.uk/wp-content/uploads/2022/05/PP15PS-California-Blue.jpg">
-                <img src="https://clickprops.co.uk/wp-content/uploads/2022/05/PP15PS-California-Blue.jpg">
-                <img src="https://clickprops.co.uk/wp-content/uploads/2022/05/PP15PS-California-Blue.jpg">
-                <img src="https://clickprops.co.uk/wp-content/uploads/2022/05/PP15PS-California-Blue.jpg">
-                <img src="https://clickprops.co.uk/wp-content/uploads/2022/05/PP15PS-California-Blue.jpg">
-                <img src="https://clickprops.co.uk/wp-content/uploads/2022/05/PP15PS-California-Blue.jpg">
-            </div>
-            <p class="caption">
-                Nulla quis porttitor varius phasellus dolor curae primis. Suscipit sit adipiscing nibh justo hac. Turpis massa ridiculus sit, finibus quis litora sagittis torquent. Dignissim suscipit quam curabitur sit velit, rhoncus tincidunt purus? At netus efficitur penatibus purus amet urna etiam. Leo neque ligula varius lacinia torquent vehicula. Tempus non mauris vel placerat natoque.
-            </p>
-        </div>
-
-        <div class="slide-content", style="display: none;">
-            <div class="columns-8">
-                <img src="https://clickprops.co.uk/wp-content/uploads/2022/05/PP15PS-California-Blue.jpg">
-                <img src="https://clickprops.co.uk/wp-content/uploads/2022/05/PP15PS-California-Blue.jpg">
-                <img src="https://clickprops.co.uk/wp-content/uploads/2022/05/PP15PS-California-Blue.jpg">
-                <img src="https://clickprops.co.uk/wp-content/uploads/2022/05/PP15PS-California-Blue.jpg">
-                <img src="https://clickprops.co.uk/wp-content/uploads/2022/05/PP15PS-California-Blue.jpg">
-                <img src="https://clickprops.co.uk/wp-content/uploads/2022/05/PP15PS-California-Blue.jpg">
-                <img src="https://clickprops.co.uk/wp-content/uploads/2022/05/PP15PS-California-Blue.jpg">
-                <img src="https://clickprops.co.uk/wp-content/uploads/2022/05/PP15PS-California-Blue.jpg">
-            </div>
-            <p class="caption">
-                Nulla quis porttitor varius phasellus dolor curae primis. Suscipit sit adipiscing nibh justo hac. Turpis massa ridiculus sit, finibus quis litora sagittis torquent. Dignissim suscipit quam curabitur sit velit, rhoncus tincidunt purus? At netus efficitur penatibus purus amet urna etiam. Leo neque ligula varius lacinia torquent vehicula. Tempus non mauris vel placerat natoque.
-            </p>
-        </div>
-    </div>
-
-    <div class="container blog main">
-        <h1>Additional Analysis</h1>
-        <h2>Observation 1</h2>
-        <p class="text">
-            Lorem ipsum odor amet, consectetuer adipiscing elit. Himenaeos sociosqu facilisi ante; cubilia sociosqu magna libero. Dignissim vehicula felis taciti sollicitudin quam ligula a, vivamus porta. Tellus facilisi pharetra non posuere a sapien. Sagittis felis lectus ac interdum pretium sit himenaeos.
-        </p>
-        <ol>
-            <li>
-                <p class="text">Conubia aliquet semper inceptos ultricies vel metus fusce litora. </p>
-            </li>
-            <li>
-                <p class="text">Ultricies dis vehicula non lobortis hac sagittis urna dignissim ex. 
-                </p>
-            </li>
-        </ol>
-
-        <h2>Observation 2</h2>
-        <p class="text">
-            Lorem ipsum odor amet, consectetuer adipiscing elit. Himenaeos sociosqu facilisi ante; cubilia sociosqu magna libero. Dignissim vehicula felis taciti sollicitudin quam ligula a, vivamus porta. Tellus facilisi pharetra non posuere a sapien. Sagittis felis lectus ac interdum pretium sit himenaeos.
-        </p>
-
-        <ul >
-            <li>
-                <p class="text">Conubia aliquet semper inceptos ultricies vel metus fusce litora. </p>
-            </li>
-            <li>
-                <p class="text">Ultricies dis vehicula non lobortis hac sagittis urna dignissim ex. 
-                </p>
-            </li>
-        </ul>
-    </div>
-
-
-    <div class="container blog main">
-        <h1>Conclusion</h1>
-        <p class="text">
-            Per aptent diam; ut in mauris ultricies torquent conubia dolor. Aliquet venenatis sapien, dictum finibus ad dui. Finibus sollicitudin nullam consectetur malesuada molestie semper dolor. Platea eget hac cursus aptent maecenas penatibus vulputate. Ligula libero torquent sit per praesent praesent. Sodales risus mattis enim odio risus tristique. Dapibus vivamus quis scelerisque sollicitudin penatibus placerat erat. Ante aliquet vel; morbi quisque leo morbi. Ac sollicitudin imperdiet lacus integer cursus metus parturient euismod sociosqu.
-        </p>
-    </div>
-
-    <div class="container blog main">
-        <h1>Citation</h1>
-        <p class="text">
-            Dictumst eu himenaeos malesuada nisi eros auctor id suspendisse. Ipsum parturient est vitae proin maecenas. Nulla mollis vivamus cras nam dapibus consectetur. Id efficitur ac ultricies ornare at litora. Vestibulum nibh cursus eu gravida vivamus sem vulputate. Montes nisi ipsum urna vitae semper suscipit.
-        </p>
-<pre><code class="plaintext">@article{doe2048agi,
-    title={Artificial General Intelligence},
-    author={Doe John},
-    journal={nature},
-    year={2048}
-}</code></pre>
     </div>
 
     <!-- Footer Page -->
@@ -1104,10 +992,9 @@
             </p>
         </div>    
     </footer>
-    
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
+    <script>if (window.hljs) { hljs.initHighlightingOnLoad(); }</script>
     <script src="clarity/clarity.js"></script>    
     <script src="assets/scripts/main.js"></script>    
 </body>
